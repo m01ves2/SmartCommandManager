@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartCommandManager.Application\SmartCommandManager.Application.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.Domain\SmartCommandManager.Domain.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.Infrastructure\SmartCommandManager.Infrastructure.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.Modules.Core\SmartCommandManager.Modules.Core.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.Modules.FileSystem\SmartCommandManager.Modules.FileSystem.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.UI.CLI\SmartCommandManager.UI.CLI.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,72 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36511.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Domain", "SmartCommandManager.Domain\SmartCommandManager.Domain.csproj", "{04EEDCAF-F872-4719-A525-1400EC6FBAA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Application", "SmartCommandManager.Application\SmartCommandManager.Application.csproj", "{1D23DA27-D041-407D-9FBC-620063C48B3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Infrastructure", "SmartCommandManager.Infrastructure\SmartCommandManager.Infrastructure.csproj", "{7028888D-6758-4569-A948-754532B22096}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Modules.FileSystem", "SmartCommandManager.Modules.FileSystem\SmartCommandManager.Modules.FileSystem.csproj", "{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.CompositionRoot", "SmartCommandManager.CompositionRoot\SmartCommandManager.CompositionRoot.csproj", "{264F8276-470C-481A-96B4-4FD12D96C714}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		docs\GLOBAL NLP — INTENT DETECTION.md = docs\GLOBAL NLP — INTENT DETECTION.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Modules.Core", "SmartCommandManager.Modules.Core\SmartCommandManager.Modules.Core.csproj", "{3C038B93-3EFF-4F64-9F79-E640129BD20B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.UI.CLI", "SmartCommandManager.UI.CLI\SmartCommandManager.UI.CLI.csproj", "{14F35291-FE3E-4082-AE26-885BE576C6AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Modules.Thread", "SmartCommandManager.Modules.Thread\SmartCommandManager.Modules.Thread.csproj", "{4B6E1685-5421-4FEF-B4B1-3CAADBCD5118}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{04EEDCAF-F872-4719-A525-1400EC6FBAA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04EEDCAF-F872-4719-A525-1400EC6FBAA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04EEDCAF-F872-4719-A525-1400EC6FBAA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04EEDCAF-F872-4719-A525-1400EC6FBAA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D23DA27-D041-407D-9FBC-620063C48B3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D23DA27-D041-407D-9FBC-620063C48B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D23DA27-D041-407D-9FBC-620063C48B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D23DA27-D041-407D-9FBC-620063C48B3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7028888D-6758-4569-A948-754532B22096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7028888D-6758-4569-A948-754532B22096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7028888D-6758-4569-A948-754532B22096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7028888D-6758-4569-A948-754532B22096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{264F8276-470C-481A-96B4-4FD12D96C714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{264F8276-470C-481A-96B4-4FD12D96C714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{264F8276-470C-481A-96B4-4FD12D96C714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{264F8276-470C-481A-96B4-4FD12D96C714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C038B93-3EFF-4F64-9F79-E640129BD20B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C038B93-3EFF-4F64-9F79-E640129BD20B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C038B93-3EFF-4F64-9F79-E640129BD20B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C038B93-3EFF-4F64-9F79-E640129BD20B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14F35291-FE3E-4082-AE26-885BE576C6AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14F35291-FE3E-4082-AE26-885BE576C6AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14F35291-FE3E-4082-AE26-885BE576C6AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14F35291-FE3E-4082-AE26-885BE576C6AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B6E1685-5421-4FEF-B4B1-3CAADBCD5118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B6E1685-5421-4FEF-B4B1-3CAADBCD5118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B6E1685-5421-4FEF-B4B1-3CAADBCD5118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B6E1685-5421-4FEF-B4B1-3CAADBCD5118}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99124033-9692-4DE5-86C3-A583C8F8223C}
+	EndGlobalSection
+EndGlobal
