@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="FileSystem\" />
     <Folder Include="Logging\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SmartCommandManager.Application\SmartCommandManager.Application.csproj" />
     <ProjectReference Include="..\SmartCommandManager.Domain\SmartCommandManager.Domain.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.Modules.FileSystem\SmartCommandManager.Modules.FileSystem.csproj" />
   </ItemGroup>
 
 </Project>

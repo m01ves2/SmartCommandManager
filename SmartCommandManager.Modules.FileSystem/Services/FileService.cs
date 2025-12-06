@@ -1,4 +1,4 @@
-﻿namespace SmartCommandManager.Infrastructure.FileSystem
+﻿namespace SmartCommandManager.Modules.FileSystem.Services
 { 
     public class FileService : IFileService
     {

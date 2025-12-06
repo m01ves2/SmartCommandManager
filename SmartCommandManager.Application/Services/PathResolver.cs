@@ -1,4 +1,4 @@
-﻿namespace SmartCommandManager.Application.Dispatcher
+﻿namespace SmartCommandManager.Application.Services
 {
     public class PathResolver
     {

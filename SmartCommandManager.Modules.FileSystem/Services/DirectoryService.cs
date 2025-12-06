@@ -1,5 +1,5 @@
 ﻿//low-level working with files/directories
-namespace SmartCommandManager.Infrastructure.FileSystem
+namespace SmartCommandManager.Modules.FileSystem.Services
 {
     public class DirectoryService : IDirectoryService
     {

@@ -4,6 +4,6 @@ namespace SmartCommandManager.Application.NLP.Validators
 {
     public interface IIntentValidator
     {
-        bool IsValid(IntentPattern pattern, IReadOnlyList<Token> tokens, IntentCandidate candidate);
+        bool IsValid(IntentPattern pattern, IReadOnlyList<Token> tokens);
     }
 }

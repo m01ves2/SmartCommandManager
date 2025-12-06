@@ -3,7 +3,7 @@ using System.Text;
 
 namespace SmartCommandManager.Application.NLP
 {
-    class TokenBuilder
+    internal sealed class TokenBuilder
     {
         private StringBuilder _sb = new StringBuilder();
         public bool IsQuoted { get; set; }
@@ -16,8 +16,9 @@ namespace SmartCommandManager.Application.NLP
 
         public Token Build()
         {
-            string value = IsQuoted ? _sb.ToString() : _sb.ToString().Trim();
-            return new Token(value);
+            //string value = IsQuoted ? _sb.ToString() : _sb.ToString().Trim();
+            string value = _sb.ToString();
+            return new Token(value, IsQuoted, QuoteChar);
         }
 
         public void Reset()

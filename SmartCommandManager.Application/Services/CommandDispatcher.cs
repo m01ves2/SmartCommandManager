@@ -1,14 +1,21 @@
-﻿namespace SmartCommandManager.Application.Dispatcher
+﻿using Microsoft.Extensions.Logging;
+using ILogger = Microsoft.Extensions.Logging.ILogger; //to shrink Microsoft.Extensions.Logging namespace
+
+using SmartCommandManager.Application.NLP;
+using SmartCommandManager.Domain.Commands;
+using SmartCommandManager.Domain.NLP;
+
+namespace SmartCommandManager.Application.Services
 {
     public class CommandDispatcher : ICommandDispatcher
     {
         private readonly CommandContext _commandContext;
         private readonly CommandRegistry _commandRegistry;
         //private readonly CommandParser _commandParser;
-        private readonly INlpParser _nlp;
+        private readonly IIntentNlpParser _nlp;
         private readonly ILogger<CommandDispatcher> _logger;
         private readonly ITokenizer _tokenizer;
-        public CommandDispatcher(CommandContext commandContext, CommandRegistry commandRegistry, ITokenizer tokenizer, INlpParser nlp, ILogger<CommandDispatcher> logger)
+        public CommandDispatcher(CommandContext commandContext, CommandRegistry commandRegistry, ITokenizer tokenizer, IIntentNlpParser nlp, ILogger<CommandDispatcher> logger)
         {
             _commandContext = commandContext;
             _commandRegistry = commandRegistry;
@@ -25,9 +32,11 @@
                 //ICommand command = _commandRegistry.GetCommand(commandName);
 
                 IReadOnlyList<Token> tokens = _tokenizer.Tokenize(input);
-                (ICommand command, IEnumerable<Token> argTokens) = _nlp.Parse(tokens);
+                //_commandContext.Tokens = tokens;
+                string commandName = _nlp.Parse(tokens);
+                ICommand command = _commandRegistry.GetCommand(commandName);
 
-                CommandResult commandResult = command.Execute(argTokens);
+                CommandResult commandResult = command.Execute(_commandContext);
                 return commandResult;
             }
             catch (InvalidOperationException ex) {

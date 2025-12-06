@@ -5,6 +5,7 @@ namespace SmartCommandManager.Application.NLP
     public class Tokenizer : ITokenizer
     {
         enum State { Outside, Inside, InsideQuoted, Escape };
+
         public IReadOnlyList<Token> Tokenize(string input)
         {
             List<Token> tokens = new List<Token>();
@@ -144,11 +145,6 @@ namespace SmartCommandManager.Application.NLP
             else
                 // ВНЕ quoted токенов escape — ошибка
                 throw new InvalidOperationException("Unexpected escape outside quoted string");
-        }
-
-        IReadOnlyList<Token> ITokenizer.Tokenize(string input)
-        {
-            throw new NotImplementedException();
         }
     }
 }

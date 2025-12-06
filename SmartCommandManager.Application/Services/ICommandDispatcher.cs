@@ -1,4 +1,6 @@
-﻿namespace SmartFileManager.App.Interfaces
+﻿using SmartCommandManager.Domain.Commands;
+
+namespace SmartCommandManager.Application.Services
 {
     public interface ICommandDispatcher
     {

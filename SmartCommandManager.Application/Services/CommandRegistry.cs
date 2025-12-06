@@ -1,4 +1,6 @@
-﻿namespace SmartCommandManager.Application.Dispatcher
+﻿using SmartCommandManager.Domain.Commands;
+
+namespace SmartCommandManager.Application.Services
 {
     /// <summary>
     /// Registry for Commands
@@ -12,14 +14,16 @@
             Commands = commands.ToList();
         }
 
-        //public ICommand GetCommand(string name)
-        //{
-        //    if (_registry.ContainsKey(name))
-        //        return _registry[name];
-        //    else if (_registry.ContainsKey("unknown"))
-        //        return _registry["unknown"];
-        //    else
-        //        throw new Exception($"Command {name} not registered.");
-        //}
+        public ICommand GetCommand(string name)
+        {
+            throw new NotImplementedException();
+
+            //if (_registry.ContainsKey(name))
+            //    return _registry[name];
+            //else if (_registry.ContainsKey("unknown"))
+            //    return _registry["unknown"];
+            //else
+            //    throw new Exception($"Command {name} not registered.");
+        }
     }
 }

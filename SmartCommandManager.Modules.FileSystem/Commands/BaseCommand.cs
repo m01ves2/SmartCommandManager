@@ -1,11 +1,6 @@
-﻿using SmartCommandManager.Application.Dispatcher;
+﻿using SmartCommandManager.Domain.Commands;
 using SmartCommandManager.Domain.NLP;
 using SmartCommandManager.Modules.FileSystem.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands
 {
@@ -16,6 +11,10 @@ namespace SmartCommandManager.Modules.FileSystem.Commands
         public virtual bool HideFromHelp => false;
 
         public abstract IEnumerable<string> NLPatterns { get; }
+
+        public CommandInfo CommandInfo => throw new NotImplementedException();
+
+        public IReadOnlyCollection<IntentPattern> IntentPatterns => throw new NotImplementedException();
 
         protected readonly IFileSystemService _fs;
         protected readonly CommandContext _context;
@@ -56,6 +55,11 @@ namespace SmartCommandManager.Modules.FileSystem.Commands
         }
 
         public CommandResult Execute(IEnumerable<Token> argTokens)
+        {
+            throw new NotImplementedException();
+        }
+
+        public CommandResult Execute(CommandContext context)
         {
             throw new NotImplementedException();
         }

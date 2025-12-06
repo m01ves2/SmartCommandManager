@@ -15,14 +15,14 @@
         // при необходимости можно добавить данные, например, список файлов
         public object? Data { get; set; } //если команда возвращает что-то, например, список файлов (List<FileItem>).
 
-        private CommandResult(CommandStatus status, string message, object? data)
-        {
-            Status = status;
-            Message = message;
-            Data = data;
-        }
+        //private CommandResult(CommandStatus status, string message, object? data)
+        //{
+        //    Status = status;
+        //    Message = message;
+        //    Data = data;
+        //}
 
-        public static CommandResult Ok(string msg = "") => new(CommandStatus.Success, msg, null);
-        public static CommandResult Fail(string msg) => new(CommandStatus.Error, msg, null);
+        //public static CommandResult Ok(string msg = "") => new(CommandStatus.Success, msg, null);
+        //public static CommandResult Fail(string msg) => new(CommandStatus.Error, msg, null);
     }
 }
