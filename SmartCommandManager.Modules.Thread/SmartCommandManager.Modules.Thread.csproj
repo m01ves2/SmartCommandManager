@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\PsCommand\Validators\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SmartCommandManager.Domain\SmartCommandManager.Domain.csproj" />
   </ItemGroup>
 
 </Project>
