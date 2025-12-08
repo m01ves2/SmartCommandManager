@@ -33,8 +33,8 @@ namespace SmartCommandManager.Application.Services
 
                 IReadOnlyList<Token> tokens = _tokenizer.Tokenize(input);
                 //_commandContext.Tokens = tokens;
-                string commandName = _nlp.Parse(tokens);
-                ICommand command = _commandRegistry.GetCommand(commandName);
+                NlpIntentResult  result = _nlp.Parse(tokens, _commandRegistry.Commands); //TODO
+                ICommand command = _commandRegistry.GetCommand(result.Intent);
 
                 CommandResult commandResult = command.Execute(_commandContext);
                 return commandResult;

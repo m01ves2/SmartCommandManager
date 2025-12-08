@@ -6,9 +6,7 @@ namespace SmartCommandManager.Domain.Commands
     {
         CommandInfo CommandInfo { get; }
 
-        // Каждая команда предоставляет свои IntentPatterns
-        IReadOnlyCollection<IntentPattern> IntentPatterns { get; }
-
-        CommandResult Execute(CommandContext context);
+        IntentPattern IntentPattern { get; }
+        CommandResult Execute(object args); // Универсальный вызов
     }
 }

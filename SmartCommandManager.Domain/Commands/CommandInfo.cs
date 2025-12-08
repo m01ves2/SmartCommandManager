@@ -4,8 +4,15 @@ namespace SmartCommandManager.Domain.Commands
 {
     public class CommandInfo
     {
-        string Name { get; }
-        string Description { get; }
-        CommandCategory Category { get; }
+        public string Name { get; }
+        public string Description { get; }
+        public CommandCategory Category { get; }
+
+        public CommandInfo(string name, string description, CommandCategory category) 
+        { 
+            Name = name; 
+            Description = description; 
+            Category = category; 
+        }
     }
 }

@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Domain"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Application", "SmartCommandManager.Application\SmartCommandManager.Application.csproj", "{1D23DA27-D041-407D-9FBC-620063C48B3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Infrastructure", "SmartCommandManager.Infrastructure\SmartCommandManager.Infrastructure.csproj", "{7028888D-6758-4569-A948-754532B22096}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Modules.FileSystem", "SmartCommandManager.Modules.FileSystem\SmartCommandManager.Modules.FileSystem.csproj", "{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.CompositionRoot", "SmartCommandManager.CompositionRoot\SmartCommandManager.CompositionRoot.csproj", "{264F8276-470C-481A-96B4-4FD12D96C714}"
@@ -38,10 +36,6 @@ Global
 		{1D23DA27-D041-407D-9FBC-620063C48B3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D23DA27-D041-407D-9FBC-620063C48B3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D23DA27-D041-407D-9FBC-620063C48B3C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7028888D-6758-4569-A948-754532B22096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7028888D-6758-4569-A948-754532B22096}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7028888D-6758-4569-A948-754532B22096}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7028888D-6758-4569-A948-754532B22096}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1CDA77D-F13A-4DD4-9806-5CE500D3E285}.Release|Any CPU.ActiveCfg = Release|Any CPU

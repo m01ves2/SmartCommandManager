@@ -1,9 +1,11 @@
-﻿using SmartCommandManager.Domain.NLP;
+﻿using SmartCommandManager.Domain.Commands;
+using SmartCommandManager.Domain.NLP;
+
 
 namespace SmartCommandManager.Application.NLP
 {
     public interface IIntentNlpParser
     {
-        string Parse(IEnumerable<Token> tokens);
+        public NlpIntentResult Parse(IReadOnlyList<Token> tokens, IEnumerable<ICommand> commands);
     }
 }

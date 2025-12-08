@@ -1,4 +1,6 @@
-﻿namespace SmartCommandManager.Modules.FileSystem.Services
+﻿using SmartCommandManager.Domain.Commands;
+
+namespace SmartCommandManager.Modules.FileSystem.Services
 {
     public interface IFileSystemService
     {

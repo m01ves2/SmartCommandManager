@@ -1,4 +1,5 @@
-﻿using SmartCommandManager.Domain.Commands;
+﻿using SmartCommandManager.Application.Exceptions;
+using SmartCommandManager.Domain.Commands;
 
 namespace SmartCommandManager.Application.Services
 {
@@ -14,16 +15,23 @@ namespace SmartCommandManager.Application.Services
             Commands = commands.ToList();
         }
 
-        public ICommand GetCommand(string name)
+        public ICommand GetCommand(string intent)
         {
-            throw new NotImplementedException();
+            ICommand? command = Commands.FirstOrDefault(c => c.IntentPattern.Synonyms.Contains(intent));
 
-            //if (_registry.ContainsKey(name))
-            //    return _registry[name];
-            //else if (_registry.ContainsKey("unknown"))
-            //    return _registry["unknown"];
-            //else
-            //    throw new Exception($"Command {name} not registered.");
+            if (command != null)
+                return command;
+            else {
+                command = Commands.FirstOrDefault(c => c.IntentPattern.Primary.Equals("unknown"));
+                if(command != null)
+                    return command;
+            }
+            throw new CommandNotFoundException($"Command {intent} not registered.");
+        }
+
+        public IReadOnlyList<ICommand> GetCommands()
+        {
+            return Commands.ToList();
         }
     }
 }

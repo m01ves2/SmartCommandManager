@@ -18,6 +18,10 @@ namespace SmartCommandManager.Application.NLP
         {
             //string value = IsQuoted ? _sb.ToString() : _sb.ToString().Trim();
             string value = _sb.ToString();
+            
+            if(!(value.StartsWith('\"') || value.StartsWith('\'')))
+                value = value.ToLower();
+            
             return new Token(value, IsQuoted, QuoteChar);
         }
 

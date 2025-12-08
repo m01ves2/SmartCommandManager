@@ -35,15 +35,15 @@ namespace SmartCommandManager.CompositionRoot
 
         private static void RegisterCommands(IServiceCollection services)
         {
-            services.AddSingleton<ICommand, CopyCommand>();
-            services.AddSingleton<ICommand, CreateCommand>();
-            services.AddSingleton<ICommand, DeleteCommand>();
-            services.AddSingleton<ICommand, ListCommand>();
-            services.AddSingleton<ICommand, MoveCommand>();
-            services.AddSingleton<ICommand, ExitCommand>();
-            services.AddSingleton<ICommand, CdCommand>();
-            services.AddSingleton<ICommand, UnknownCommand>();
-            services.AddSingleton<ICommand, HelpCommand>();
+            services.AddSingleton<ITemplateCommand, CopyCommand>();
+            services.AddSingleton<ITemplateCommand, CreateCommand>();
+            services.AddSingleton<ITemplateCommand, DeleteCommand>();
+            services.AddSingleton<ITemplateCommand, ListCommand>();
+            services.AddSingleton<ITemplateCommand, MoveCommand>();
+            services.AddSingleton<ITemplateCommand, ExitCommand>();
+            services.AddSingleton<ITemplateCommand, CdCommand>();
+            services.AddSingleton<ITemplateCommand, UnknownCommand>();
+            services.AddSingleton<ITemplateCommand, HelpCommand>();
         }
     }
 }

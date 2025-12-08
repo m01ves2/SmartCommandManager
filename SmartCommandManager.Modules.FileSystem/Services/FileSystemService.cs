@@ -1,4 +1,7 @@
-﻿namespace SmartCommandManager.Modules.FileSystem.Services
+﻿using SmartCommandManager.Domain.Commands;
+using System.Text;
+
+namespace SmartCommandManager.Modules.FileSystem.Services
 {
     public enum ItemType
     {
