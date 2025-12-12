@@ -1,5 +1,4 @@
 ﻿using SmartCommandManager.Domain.Commands;
-using SmartCommandManager.Domain.NLP;
 using System.Diagnostics;
 using System.Text;
 
@@ -8,8 +7,6 @@ namespace SmartCommandManager.Modules.Thread.Commands.PsCommand
     public class PsCommand : BaseCommand<Unit>
     {
         public override CommandInfo CommandInfo { get; } = new("ps", "Show processes info", CommandCategory.Thread);
-
-        public override IntentPattern IntentPattern { get; } = new IntentPattern("ps", new[] { "ps", "process", "processes", "thread", "threads" });
 
         protected override CommandResult Execute(Unit args)
         {

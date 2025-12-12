@@ -1,0 +1,72 @@
+﻿using SmartCommandManager.Application.Exceptions;
+using SmartCommandManager.Domain.Commands;
+using SmartCommandManager.Domain.NLP;
+using SmartCommandManager.NLP.IntentNlp.Models;
+
+namespace SmartCommandManager.NLP.IntentNlp.Parsers
+{
+    public sealed record Candidate(ICommand command, int index, string tokenValue);
+
+    public class IntentParser : IIntentParser
+    {
+        public IntentResult Parse(IReadOnlyList<Token> tokens, IEnumerable<ICommand> commands)
+        {
+            // 1. Collect candidates
+            var candidates = CollectCandidates(tokens, commands);
+
+            // 2. No candidates
+            if (candidates.Count == 0)
+                throw new IntentNotFoundException("No intent found in input.");
+
+            // 3. Group by command
+            //var groups = candidates.GroupBy(c => c.command).ToList();
+            var groups = GroupCandidates(candidates);
+
+            if (groups.Count > 1)
+                throw new AmbiguousIntentException();
+
+            // 4. Select first match by index            
+            Candidate best = GetFirstMatchedCandidate(groups);
+
+            string primary = best.command.IntentPattern.Primary;
+            int index = best.index;
+
+            return new IntentResult(primary, index);
+        }
+
+        private List<Candidate> CollectCandidates(IReadOnlyList<Token> tokens, IEnumerable<ICommand> commands)
+        {
+            var candidates = new List<Candidate>();
+            
+            for (int i = 0; i < tokens.Count; i++) {
+                string value = tokens[i].Value;
+
+                foreach (var command in commands) {
+                    if (command.IntentPattern.Synonyms.Contains(value)) {
+                        candidates.Add( new Candidate(command, i, value));
+                    }
+                }
+            }
+
+            return candidates;
+        }
+
+        private List<IGrouping<ICommand, Candidate>> GroupCandidates(List<Candidate> candidates)
+        {
+            var groups = candidates.GroupBy(c => c.command).ToList();
+            return groups;
+        }
+
+        private Candidate GetFirstMatchedCandidate(List<IGrouping<ICommand, Candidate>> groups)
+        {
+            //Ex: please copy this file and also copy that
+            //(command = CopyCommand, index = 1)
+            //(command = CopyCommand, index = 5)
+
+            var group = groups.Single();
+            var best = group.OrderBy(c => c.index).First();
+            
+            return best;
+        }
+    }
+}

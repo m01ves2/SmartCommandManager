@@ -7,12 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <None Remove="IntentNlp\Parsers\IntentNlpParser - LINQ.txt" />
+    <None Remove="IntentNlp\Parsers\IntentNlpParser - SeniorDeveloper.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartCommandManager.Domain\SmartCommandManager.Domain.csproj" />
-    <ProjectReference Include="..\SmartCommandManager.NLP\SmartCommandManager.NLP.csproj" />
+    <Folder Include="CommandNlp\Models\" />
+    <Folder Include="CommandNlp\Validators\" />
   </ItemGroup>
 
 </Project>

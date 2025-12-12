@@ -1,5 +1,4 @@
 ﻿using SmartCommandManager.Domain.Commands;
-using SmartCommandManager.Domain.NLP;
 using SmartCommandManager.Modules.FileSystem.Services;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
@@ -7,8 +6,6 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
     public sealed class CopyCommand : FileSystemCommandBase<CopyArgs>
     {
         public override CommandInfo CommandInfo { get; } = new("copy", "Copy files and directories.", CommandCategory.FileSystem);
-
-        public override IntentPattern IntentPattern { get; } = new IntentPattern("copy", new[] { "copy", "cp", "duplicate", "clone" });
 
         public CopyCommand(IFileSystemService fs, CommandContext context) : base(fs, context)
         {

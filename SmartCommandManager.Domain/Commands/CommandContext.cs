@@ -1,6 +1,4 @@
-﻿using SmartCommandManager.Domain.NLP;
-
-namespace SmartCommandManager.Domain.Commands
+﻿namespace SmartCommandManager.Domain.Commands
 {
     public sealed class CommandContext
     {

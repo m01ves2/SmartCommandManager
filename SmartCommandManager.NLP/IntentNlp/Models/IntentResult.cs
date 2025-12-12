@@ -1,0 +1,14 @@
+﻿namespace SmartCommandManager.NLP.IntentNlp.Models
+{
+    public class IntentResult
+    {
+        public IntentDescriptor Intent { get; }
+        public int IntentIndex { get; }
+
+        public IntentResult(IntentDescriptor intent, int index)
+        {
+            Intent = intent;
+            IntentIndex = index;
+        }
+    }
+}

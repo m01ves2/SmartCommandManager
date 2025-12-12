@@ -1,5 +1,4 @@
 ﻿using SmartCommandManager.Domain.Commands;
-using SmartCommandManager.Domain.NLP;
 using SmartCommandManager.Modules.FileSystem.Services;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices.Marshalling;

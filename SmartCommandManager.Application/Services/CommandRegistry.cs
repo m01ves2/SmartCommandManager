@@ -1,37 +1,29 @@
 ﻿using SmartCommandManager.Application.Exceptions;
 using SmartCommandManager.Domain.Commands;
+using SmartCommandManager.NLP.IntentNlp.Models;
 
 namespace SmartCommandManager.Application.Services
 {
     /// <summary>
     /// Registry for Commands
     /// </summary>
-    public class CommandRegistry
+    public sealed class CommandRegistry
     {
-        public IReadOnlyList<ICommand> Commands { get; }
+        private readonly Dictionary<IntentDescriptor, ICommand> _intentCommandMap = new();
 
-        public CommandRegistry(IEnumerable<ICommand> commands)
+        public void Register(IntentDescriptor intent, ICommand command)
         {
-            Commands = commands.ToList();
+            _intentCommandMap[intent] = command;
         }
 
-        public ICommand GetCommand(string intent)
+        public ICommand Find(IntentDescriptor intent)
         {
-            ICommand? command = Commands.FirstOrDefault(c => c.IntentPattern.Synonyms.Contains(intent));
-
-            if (command != null)
-                return command;
-            else {
-                command = Commands.FirstOrDefault(c => c.IntentPattern.Primary.Equals("unknown"));
-                if(command != null)
-                    return command;
-            }
-            throw new CommandNotFoundException($"Command {intent} not registered.");
+            if (!_intentCommandMap.TryGetValue(intent, out var cmd))
+                throw new CommandNotFoundException(intent.Primary);
+            return cmd;
         }
 
-        public IReadOnlyList<ICommand> GetCommands()
-        {
-            return Commands.ToList();
-        }
+        public IReadOnlyCollection<ICommand> AllCommands => _intentCommandMap.Values;
+        public IReadOnlyCollection<IntentDescriptor> AllIntents => _intentCommandMap.Keys;
     }
 }
