@@ -1,5 +1,5 @@
-﻿using SmartCommandManager.NLP.IntentNlp.Models;
-using SmartCommandManager.NLP.IntentNlp.Tokenizer;
+﻿using SmartCommandManager.NLP.Intent.Models;
+using SmartCommandManager.NLP.Intent.Tokenizer;
 
 namespace SmartCommandManager.UI.CLI
 {
@@ -25,7 +25,7 @@ namespace SmartCommandManager.UI.CLI
                 Console.WriteLine(item.Value);
             }
 
-            // public CommandDispatcher(CommandContext commandContext, CommandRegistry commandRegistry, ITokenizer tokenizer, IIntentNlpParser nlp, ILogger<CommandDispatcher> logger)
+            // public CommandDispatcher(CommandContext commandContext, CommandRegistry commandRegistry, ITokenizer tokenizer, IIntentParser nlp, ILogger<CommandDispatcher> logger)
             //CommandContext commandContext = new CommandContext(tokens.ToList().AsReadOnly(), input);
             //CommandRegistry commandRegistry = new CommandRegistry();
 

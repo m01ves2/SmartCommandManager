@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.NLP.IntentNlp.Models;
+﻿using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
 {
@@ -7,7 +7,7 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
         public static IntentDescriptor Descriptor =>
             new IntentDescriptor(
                 Primary: "copy",
-                Synonyms: new[] { "copy", "cp", "duplicate", "clone" }
+                Aliases : new[] { "copy", "cp", "duplicate", "clone" }
             );
     }
 }

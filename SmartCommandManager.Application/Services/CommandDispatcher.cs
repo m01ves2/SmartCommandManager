@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using SmartCommandManager.Application.Exceptions;
 using SmartCommandManager.Domain.Commands;
-using SmartCommandManager.NLP.IntentNlp.Exceptions;
-using SmartCommandManager.NLP.IntentNlp.Models;
-using SmartCommandManager.NLP.IntentNlp.Parsers;
-using SmartCommandManager.NLP.IntentNlp.Tokenizer;
+using SmartCommandManager.NLP.Intent.Exceptions;
+using SmartCommandManager.NLP.Intent.Models;
+using SmartCommandManager.NLP.Intent.Parsers;
+using SmartCommandManager.NLP.Intent.Tokenizer;
 
 namespace SmartCommandManager.Application.Services
 {

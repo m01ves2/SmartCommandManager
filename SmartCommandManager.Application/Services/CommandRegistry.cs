@@ -1,6 +1,6 @@
 ﻿using SmartCommandManager.Application.Exceptions;
 using SmartCommandManager.Domain.Commands;
-using SmartCommandManager.NLP.IntentNlp.Models;
+using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Application.Services
 {

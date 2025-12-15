@@ -39,9 +39,9 @@
 
     public sealed class CommandResult
     {
-        public CommandStatus Status { get; init; }        // Success, Fail, ValidationError, NotFound, Forbidden, etc.
-        public string? Message { get; init; }             // Короткое описание результата
-        public object? Data { get; init; }                // Любые данные DTO
-        public IReadOnlyList<CommandError>? Errors { get; init; }   // Для валидации
+        public CommandStatus Status { get; set; }        // Success, Fail, ValidationError, NotFound, Forbidden, etc.
+        public string? Message { get; set; }             // Короткое описание результата
+        public object? Data { get; set; }                // Любые данные DTO
+        public IReadOnlyList<CommandError>? Errors { get; set; }   // Для валидации
     }
 }

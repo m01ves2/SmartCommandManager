@@ -1,100 +1,151 @@
-﻿using SmartCommandManager.NLP.CommandNlp.Parsers;
-using SmartCommandManager.NLP.IntentNlp.Models;
+﻿using SmartCommandManager.NLP.Command.Extractors;
+using SmartCommandManager.NLP.Command.Models;
+using SmartCommandManager.NLP.Command.Parsers;
+using SmartCommandManager.NLP.Intent.Models;
+using System;
+using System.Reflection;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
 {
+    public sealed record FlagDescriptor(string Canonical, IReadOnlyList<string> Aliases);
+
     public class CopyParser : ICommandParser<CopyArgs>
     {
-        IEnumerable<IValidator<CopyArgs>> _validators;
-
-        record MarkerParseResult(IReadOnlyList<int> Indexes);
-        record PathParseResult(IReadOnlyList<string> Paths);
-        record FlagParseResult(bool IsPresent);
-        record WildcardParseResult(bool IsWildcard);
-        record NoiseParseResult(double NoiseLevel);
-
-        record CopyParseTree(
-            MarkerParseResult SourceMarker,
-            MarkerParseResult DestinationMarker,
-            PathParseResult SourcePaths,
-            PathParseResult DestinationPaths,
-            FlagParseResult IsRecursive,
-            FlagParseResult IsForced,
-            WildcardParseResult Wildcard,
-            NoiseParseResult Noise
-        );
-
-        public CopyParser(IEnumerable<IValidator<CopyArgs>> validators)
+        public CopyArgs Parse(IReadOnlyList<Token> tokens, IntentResult intent)
         {
-            _validators = validators.ToList();
+            //1. Make parse tree
+
+            CopyParseTree tree = new CopyParseTree
+            {
+                Intent = intent,
+            };
+
+            var sourceMarkers = ExtractSourceMarkers(tokens, tree);
+            var destinationMarkers = ExtractDestinationMarkers(tokens, tree);
+
+            tree.SourceMarkers = sourceMarkers;
+            tree.DestinationMarkers = destinationMarkers;
+            tree.SourcePaths = ExtractSourcePaths(tokens, tree);
+            tree.DestinationPaths = ExtractDestinationPaths(tokens, tree);
+            tree.Flags = ExtractFlags(tokens, tree);
+            tree.Wildcard = ExtractWildcard(tokens, tree);
+            tree.Noise = NoiseExtractionResult.None; //while no need to ExtractNoise
+
+            //2. Validate parsed tree
+            //Validate(tree);
+
+            //3. Make command context - Args
+            //return CopyBuilder.Build(tree);
         }
 
-        public CopyArgs Parse(IEnumerable<Token> tokens)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CopyArgs Parse(IReadOnlyList<Token> tokens, int intentIndex)
-        {
-            // 1. Построить рабочую "зону" — tokens после intent
-            var span = ExtractRelevantTokens(tokens, intentIndex);
-
-            var parseResult = new ParseResult();
-
-            // 2. Найти ключевые слова (from, in, inside, to, into)
-            parseResult = DetectMarkers(span, parseResult);
-
-            // 3. Определить source
-            string source = ExtractSource(span, markers);
-
-            // 4. Определить destination
-            string destination = ExtractDestination(span, markers);
-
-            // 5. определить флаги
-            IReadOnlyList<string> flags = ExtractFlags(span, markers);
-
-            var copyArgs = new CopyArgs(source, destination, flags);
-
-            // 6. Провести валидацию
-            Validate(tokens, intentIndex, copyArgs, markers);
-
-            // 7. Сформировать контекст
-            return copyArgs;
-        }
-
-        private IReadOnlyList<Token> ExtractRelevantTokens(IReadOnlyList<Token> tokens, int intentIndex)
-        {
-            return tokens.Skip(intentIndex + 1).ToList();
-        }
-
-        private Markers DetectMarkers(IReadOnlyList<Token> tokens)
+        private MarkerExtractionResult ExtractSourceMarkers(IReadOnlyList<Token> tokens, CopyParseTree tree)
         {
             string[] sourceMarkers = ["from", "in", "inside"];
+            int intentIndex = tree.Intent.IntentIndex;
+            MarkerExtractionResult markerExtractionResult = MarkerExtractor.Extract(tokens, intentIndex, sourceMarkers);
+            return markerExtractionResult;
         }
 
-        private string ExtractSource(IReadOnlyList<Token> tokens, Markers markers)
+        private MarkerExtractionResult ExtractDestinationMarkers(IReadOnlyList<Token> tokens, CopyParseTree tree)
+        {
+            string[] destinationMarkers = ["to", "into"];
+            int intentIndex = tree.Intent.IntentIndex;
+            MarkerExtractionResult markerExtractionResult = MarkerExtractor.Extract(tokens, intentIndex, destinationMarkers);
+            return markerExtractionResult;
+        }
+
+
+        private PathExtractionResult ExtractSourcePaths(IReadOnlyList<Token> tokens, CopyParseTree tree)
+        {
+            var paths = ExtractPathsCore(
+                tokens,
+                tree.SourceMarkers.Indexes,
+                tree.DestinationMarkers.Indexes,
+                tree.Intent.IntentIndex + 1);
+
+            return new PathExtractionResult(paths);
+        }
+        private PathExtractionResult ExtractDestinationPaths(IReadOnlyList<Token> tokens, CopyParseTree tree)
+        {
+            var paths = ExtractPathsCore(
+                tokens,
+                tree.DestinationMarkers.Indexes,
+                tree.SourceMarkers.Indexes,
+                tree.Intent.IntentIndex + 2);
+
+            return new PathExtractionResult(paths);
+        }
+
+        private IReadOnlyList<string> ExtractPathsCore( 
+            IReadOnlyList<Token> tokens, 
+            IReadOnlyList<int> markers, 
+            IReadOnlyList<int> forbiddenIndexes, 
+            int defaultIndex)
+        {
+            var paths = new List<string>();
+
+            if (markers.Count > 0) {
+                foreach (var markerIndex in markers) {
+                    int candidate = markerIndex + 1;
+
+                    if (IsInvalidCandidate(candidate, tokens.Count, forbiddenIndexes, markers))
+                        paths.Add("");
+                    else
+                        paths.Add(tokens[candidate].Value);
+                }
+            }
+            else {
+                if (IsInvalidCandidate(defaultIndex, tokens.Count, forbiddenIndexes, markers))
+                    paths.Add("");
+                else
+                    paths.Add(tokens[defaultIndex].Value);
+            }
+
+            return paths;
+        }
+
+        bool IsInvalidCandidate( int index, int tokenCount, IReadOnlyCollection<int> sourceMarkers, IReadOnlyCollection<int> destinationMarkers)
+        {
+            return index >= tokenCount || sourceMarkers.Contains(index) || destinationMarkers.Contains(index);
+        }
+
+        private FlagExtractionResult ExtractFlags(IReadOnlyList<Token> tokens, CopyParseTree tree)
+        {
+            int intentIndex = tree.Intent.IntentIndex;
+
+            var flags = new List<FlagDescriptor>
+            {
+                new("recursive", new[] { "-r", "--recursive" }),
+                new("overwrite", new[] { "-o", "--overwrite" })
+            };
+
+            var found = new List<string>();
+
+            foreach (var flag in flags) {
+                if (FlagExtractor.Extract(tokens, flag.Aliases) != FlagExtractionResult.None) {
+                    found.Add(flag.Canonical);
+                }
+            }
+
+            return new FlagExtractionResult(found);
+        }
+
+        private WildcardExtractionResult ExtractWildcard(IReadOnlyList<Token> tokens, CopyParseTree tree)
+        {
+            string[] wildcardMarkers = ["*", "all"];
+            int intentIndex = tree.Intent.IntentIndex;
+            WildcardExtractionResult wildcardExtractionResult = WildcardExtractor.Extract(tokens, intentIndex, wildcardMarkers);
+            return wildcardExtractionResult;
+        }
+
+        private NoiseExtractionResult ExtractNoise(IReadOnlyList<Token> tokens, CopyParseTree tree)
         {
             throw new NotImplementedException();
         }
 
-        private string ExtractDestination(IReadOnlyList<Token> tokens, Markers markers)
-        {
-            throw new NotImplementedException();
-        }
-
-        private IReadOnlyList<string> ExtractFlags(IReadOnlyList<Token> tokens, Markers markers)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void Validate(IReadOnlyList<Token>  tokens, int intentIndex, CopyArgs copyArgs, Markers markers)
-        {
-            throw new NotImplementedException();
-        }
-
-        public CopyArgs Parse(IEnumerable<Token> tokens)
-        {
-            throw new NotImplementedException();
-        }
+        //private void Validate(IReadOnlyList<Token>  tokens, CopyParseTree tree, CopyArgs copyArgs)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

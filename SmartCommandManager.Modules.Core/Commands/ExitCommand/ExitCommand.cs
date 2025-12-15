@@ -1,5 +1,5 @@
 ﻿using SmartCommandManager.Domain.Commands;
-using SmartCommandManager.NLP.IntentNlp.Models;
+using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Modules.Core.Commands.ExitCommand
 {

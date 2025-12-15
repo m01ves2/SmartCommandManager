@@ -246,3 +246,122 @@ ML-driven
 semantic reasoning system
 
 But the architecture is designed so that you can evolve it into a “real” NLP platform later.
+
+
+**TODO** Configuration-Driven Module Loading (Future Feature)
+
+Goal:
+Enable dynamic discovery and loading of ICommand modules via configuration files, similar to how Apache/Nginx load modules.
+SmartCommandManager becomes extensible without recompilation.
+
+✅ 1. Define module contract
+
+ Create ICommandModule interface
+
+IEnumerable<IntentDescriptor> GetIntents()
+
+IEnumerable<ICommand> GetCommands()
+
+ Ensure each module assembly contains exactly one implementation of ICommandModule.
+
+✅ 2. Create module configuration format
+
+Choose one (or support multiple):
+
+Option A (preferred): JSON
+
+Example:
+
+{
+  "modules": [
+    "SmartCommandManager.Modules.FileSystem",
+    "SmartCommandManager.Modules.Core",
+    "SmartCommandManager.Modules.Thread"
+  ]
+}
+
+Option B: XML
+<Modules>
+    <Module assembly="SmartCommandManager.Modules.FileSystem" />
+    <Module assembly="SmartCommandManager.Modules.Core" />
+</Modules>
+
+Option C: Apache-style .conf
+LoadModule FileSystemModule SmartCommandManager.Modules.FileSystem.dll
+
+
+ Define final config format in /configs/modules.json (or .xml, .conf).
+
+✅ 3. Implement ModuleLoader
+
+Create class ModuleLoader in SmartCommandManager.Infrastructure:
+
+ Load config file on startup.
+
+ For each module:
+
+ Load assembly with Assembly.Load or LoadFrom.
+
+ Find type implementing ICommandModule.
+
+ Instantiate it via Activator.CreateInstance.
+
+ Register its commands into CommandRegistry.
+
+ Register its intents into IntentRegistry.
+
+✅ 4. Modify CompositionRoot
+
+Replace manual registration:
+
+services.AddSingleton<ICommandModule>(new FileSystemModule());
+services.AddSingleton<ICommandModule>(new CoreModule());
+
+
+With:
+
+var loader = new ModuleLoader();
+var modules = loader.LoadConfiguredModules("modules.json");
+foreach (var module in modules)
+{
+    module.Register(commandRegistry);
+}
+
+
+ Ensure nothing in CompositionRoot depends on concrete modules.
+
+✅ 5. Support external plugin modules
+
+ Load DLLs not shipped with the main app.
+
+ Allow modules stored in a /modules/ folder.
+
+ Enable developers to publish their own plugin assemblies.
+
+✅ 6. Add error handling & diagnostics
+
+ Missing assembly → log warning, continue.
+
+ Missing ICommandModule → error.
+
+ Duplicate intents → error.
+
+ Invalid module config → fallback to safe mode.
+
+✅ 7. Add hot-reload (optional, stretch goal)
+
+ Watch modules.json for changes.
+
+ Reload modules dynamically without restart (optional).
+
+🚀 Outcome
+
+After this feature:
+
+You will not need to modify CompositionRoot when adding a new module.
+
+SmartCommandManager becomes extensible like Apache/Nginx.
+
+Third-party developers can write modules for your system.
+
+NLP + Command engine turns into a real plugin platform.

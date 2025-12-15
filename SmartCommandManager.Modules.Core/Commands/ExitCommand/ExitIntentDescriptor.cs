@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.NLP.IntentNlp.Models;
+﻿using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Modules.Core.Commands.ExitCommand
 {
@@ -7,7 +7,7 @@ namespace SmartCommandManager.Modules.Core.Commands.ExitCommand
         public static IntentDescriptor Descriptor =>
             new IntentDescriptor(
                 Primary: "exit",
-                Synonyms: new[] { "exit", "quit", "leave", "abandon" }
+                Aliases : new[] { "exit", "quit", "leave", "abandon" }
             );
     }
 }

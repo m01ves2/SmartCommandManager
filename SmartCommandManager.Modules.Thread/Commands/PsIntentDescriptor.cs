@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.NLP.IntentNlp.Models;
+﻿using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Modules.Thread.Commands
 {
@@ -7,7 +7,7 @@ namespace SmartCommandManager.Modules.Thread.Commands
         public static IntentDescriptor Descriptor =>
             new IntentDescriptor(
                 Primary: "ps",
-                Synonyms: new[] { "ps", "process", "processes", "thread", "threads" }
+                Aliases : new[] { "ps", "process", "processes", "thread", "threads" }
             );
     }
 }

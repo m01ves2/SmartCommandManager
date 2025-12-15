@@ -7,13 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="IntentNlp\Parsers\IntentNlpParser - LINQ.txt" />
-    <None Remove="IntentNlp\Parsers\IntentNlpParser - SeniorDeveloper.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CommandNlp\Models\" />
-    <Folder Include="CommandNlp\Validators\" />
+    <None Remove="Intent\Parsers\IntentParser - LINQ.txt" />
+    <None Remove="Intent\Parsers\IntentParser - SeniorDeveloper.txt" />
   </ItemGroup>
 
 </Project>

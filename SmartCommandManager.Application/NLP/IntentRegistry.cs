@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.NLP.IntentNlp.Models;
+﻿using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Application.NLP
 {

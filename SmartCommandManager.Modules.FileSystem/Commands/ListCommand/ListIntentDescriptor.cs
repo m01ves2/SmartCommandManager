@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.NLP.IntentNlp.Models;
+﻿using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand
 {
@@ -7,7 +7,7 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand
         public static IntentDescriptor Descriptor =>
             new IntentDescriptor(
                 Primary: "list",
-                Synonyms: new[] { "list", "ls", "show", "reveal" }
+                Aliases : new[] { "list", "ls", "show", "reveal" }
             );
     }
 }

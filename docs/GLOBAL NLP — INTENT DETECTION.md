@@ -18,7 +18,7 @@ Argument parsing is delegated to **Local NLP Parser** inside each command.
 
 ---
 
-# 2. Key Definitions
+# 2. Key Defsetions
 
 ### Token  
 Atomic unit produced by the Tokenizer.
