@@ -1,4 +1,5 @@
-﻿using SmartCommandManager.Domain.Commands;
+﻿using SmartCommandManager.Domain.Commands.Base;
+using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Modules.Core.Commands.ExitCommand

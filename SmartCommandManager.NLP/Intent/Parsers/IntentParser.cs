@@ -1,12 +1,13 @@
 ﻿using SmartCommandManager.NLP.Intent.Exceptions;
 using SmartCommandManager.NLP.Intent.Models;
+using SmartCommandManager.NLP.Shared.Models;
 
 namespace SmartCommandManager.NLP.Intent.Parsers
 {
     public class IntentParser : IIntentParser
     {
         //TODO: «заменить на LINQ после завершения MVP».
-        public IntentResult Parse(IReadOnlyList<Token> tokens, IEnumerable<IntentDescriptor> intents)
+        public IntentParseResult Parse(IReadOnlyList<Token> tokens, IEnumerable<IntentDescriptor> intents)
         {
 
             var candidates = GetCandidates(tokens, intents);
@@ -25,7 +26,7 @@ namespace SmartCommandManager.NLP.Intent.Parsers
             var intent = first.Key;
             var index = first.Value[0]; // единственная команда встретилась единственный раз. индекс токена
 
-            return new IntentResult( intent, index );
+            return new IntentParseResult( intent, index );
         }
 
         private Dictionary<IntentDescriptor, List<int>> GetCandidates(IReadOnlyList<Token> tokens, IEnumerable<IntentDescriptor> intents)

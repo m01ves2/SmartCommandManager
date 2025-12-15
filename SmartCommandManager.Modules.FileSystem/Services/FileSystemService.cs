@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.Domain.Commands;
+﻿using SmartCommandManager.Domain.Commands.Models;
 using System.Text;
 
 namespace SmartCommandManager.Modules.FileSystem.Services

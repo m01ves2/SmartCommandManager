@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.Domain.Commands;
+﻿using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.Modules.FileSystem.Services;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand

@@ -1,4 +1,5 @@
-﻿using SmartCommandManager.Domain.Commands;
+﻿using SmartCommandManager.Domain.Commands.Base;
+using SmartCommandManager.Domain.Commands.Models;
 using System.Text;
 
 namespace SmartCommandManager.Modules.Core.Commands.HelpCommand
@@ -7,9 +8,9 @@ namespace SmartCommandManager.Modules.Core.Commands.HelpCommand
     {
         public override CommandInfo CommandInfo { get; } = new("help", "Help for application.", CommandCategory.Core);
 
-        private readonly IReadOnlyList<Domain.Commands.ICommand> _commands;
+        private readonly IReadOnlyList<ICommand> _commands;
 
-        public HelpCommand(IReadOnlyList<Domain.Commands.ICommand> commands)
+        public HelpCommand(IReadOnlyList<ICommand> commands)
         {
             _commands = commands;
         }

@@ -1,5 +1,5 @@
 ﻿using SmartCommandManager.Application.Exceptions;
-using SmartCommandManager.Domain.Commands;
+using SmartCommandManager.Domain.Commands.Base;
 using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Application.Services

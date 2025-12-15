@@ -1,11 +1,12 @@
 ﻿using SmartCommandManager.Application.Dispatcher;
-using SmartCommandManager.Domain.Commands;
+using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.Modules.Core.Commands.ExitCommand;
 using SmartCommandManager.Modules.Core.Commands.HelpCommand;
 using SmartCommandManager.Modules.Core.Commands.UnknownCommand;
 using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand;
 using SmartCommandManager.Modules.FileSystem.Commands.LicstCommand;
-using SmartCommandManager.Modules.FileSystem.Services;a
+using SmartCommandManager.Modules.FileSystem.Services;
+a
 
 namespace SmartCommandManager.CompositionRoot
 {

@@ -1,5 +1,5 @@
 ﻿using SmartCommandManager.Application.Services;
-using SmartCommandManager.Domain.Commands;
+using SmartCommandManager.Domain.Commands.Models;
 
 namespace SmartCommandManager.UI.CLI
 {

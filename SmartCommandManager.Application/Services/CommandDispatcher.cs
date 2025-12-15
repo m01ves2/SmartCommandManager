@@ -1,10 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using SmartCommandManager.Application.Exceptions;
-using SmartCommandManager.Domain.Commands;
-using SmartCommandManager.NLP.Intent.Exceptions;
+using SmartCommandManager.Domain.Commands.Base;
+using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.NLP.Intent.Models;
 using SmartCommandManager.NLP.Intent.Parsers;
-using SmartCommandManager.NLP.Intent.Tokenizer;
+using SmartCommandManager.NLP.Shared.Models;
+using SmartCommandManager.NLP.Shared.Tokenizer;
 
 namespace SmartCommandManager.Application.Services
 {
@@ -33,7 +34,7 @@ namespace SmartCommandManager.Application.Services
 
                 var intents = _commandRegistry.AllIntents;
 
-                IntentResult  result = _intentParser.Parse(tokens, intents);
+                IntentParseResult  result = _intentParser.Parse(tokens, intents);
 
                 ICommand command = _commandRegistry.Find(result.Intent);
 

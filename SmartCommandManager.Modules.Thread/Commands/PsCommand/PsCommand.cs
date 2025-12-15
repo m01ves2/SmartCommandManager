@@ -1,4 +1,5 @@
-﻿using SmartCommandManager.Domain.Commands;
+﻿using SmartCommandManager.Domain.Commands.Base;
+using SmartCommandManager.Domain.Commands.Models;
 using System.Diagnostics;
 using System.Text;
 

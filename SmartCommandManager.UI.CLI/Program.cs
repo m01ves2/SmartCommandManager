@@ -1,5 +1,5 @@
-﻿using SmartCommandManager.NLP.Intent.Models;
-using SmartCommandManager.NLP.Intent.Tokenizer;
+﻿using SmartCommandManager.NLP.Shared.Models;
+using SmartCommandManager.NLP.Shared.Tokenizer;
 
 namespace SmartCommandManager.UI.CLI
 {
