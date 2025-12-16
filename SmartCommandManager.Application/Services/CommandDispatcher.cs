@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using SmartCommandManager.Application.Exceptions;
-using SmartCommandManager.Domain.Commands.Base;
 using SmartCommandManager.Domain.Commands.Models;
+using SmartCommandManager.NLP.Args.Exceptions;
+using SmartCommandManager.NLP.Intent.Exceptions;
 using SmartCommandManager.NLP.Intent.Models;
 using SmartCommandManager.NLP.Intent.Parsers;
 using SmartCommandManager.NLP.Shared.Models;
@@ -20,7 +21,6 @@ namespace SmartCommandManager.Application.Services
         {
             _commandContext = commandContext;
             _commandRegistry = commandRegistry;
-            //_commandParser = commandParser;
             _tokenizer = tokenizer;
             _intentParser = intentParser; 
             _logger = logger;
@@ -32,26 +32,20 @@ namespace SmartCommandManager.Application.Services
 
                 IReadOnlyList<Token> tokens = _tokenizer.Tokenize(input);
 
-                var intents = _commandRegistry.AllIntents;
+                IntentParseResult  intentParseResult = _intentParser.Parse(tokens, _commandRegistry.AllIntents);
 
-                IntentParseResult  result = _intentParser.Parse(tokens, intents);
+                ICommandPipeline pipeline = _commandRegistry.Find(intentParseResult.Intent);
 
-                ICommand command = _commandRegistry.Find(result.Intent);
-
-                CommandResult commandResult = command.Execute(_commandContext);
+                CommandResult commandResult = pipeline.Execute(tokens, intentParseResult);
 
                 return commandResult;
             }
-            catch (IntentNotFoundException ex) {
-                CommandResult commandResult = new CommandResult() { Status = CommandStatus.NotFound, Message = $"Unknown command: {ex.Message}" };
+            catch (IntentParsingException ex) {
+                CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Intent exception: {ex.Message}" };
                 return commandResult;
             }
-            catch (AmbiguousIntentException) {
-                CommandResult commandResult = new CommandResult() { Status = CommandStatus.Conflict, Message = "Ambiguous command: please clarify" };
-                return commandResult;
-            }
-            catch (IntentRepeatedException) {
-                CommandResult commandResult = new CommandResult() { Status = CommandStatus.Conflict, Message = "Command repeated twice" };
+            catch(ArgsParsingException ex) {
+                CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Wrong commands arguments: {ex.Message}" };
                 return commandResult;
             }
             catch (CommandNotFoundException ex) {

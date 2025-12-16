@@ -8,19 +8,19 @@ namespace SmartCommandManager.Modules.Core.Commands.HelpCommand
     {
         public override CommandInfo CommandInfo { get; } = new("help", "Help for application.", CommandCategory.Core);
 
-        private readonly IReadOnlyList<ICommand> _commands;
+        private readonly IReadOnlyList<CommandInfo> _commandsInfo;
 
-        public HelpCommand(IReadOnlyList<ICommand> commands)
+        public HelpCommand(IReadOnlyList<CommandInfo> commandsInfo)
         {
-            _commands = commands;
+            _commandsInfo = commandsInfo;
         }
 
-        protected override CommandResult Execute(Unit args)
+        public override CommandResult Execute(Unit args)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("--help: \n");
-            foreach (var item in _commands) {
-                sb.Append($"{item.CommandInfo.Name} - {item.CommandInfo.Description}" + "\n");
+            foreach (var item in _commandsInfo) {
+                sb.Append($"{item.Name} - {item.Description}" + "\n");
             }
             return new CommandResult() { Status = CommandStatus.Success, Message = sb.ToString() };
         }

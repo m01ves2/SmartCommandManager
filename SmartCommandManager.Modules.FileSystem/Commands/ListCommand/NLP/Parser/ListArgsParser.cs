@@ -9,11 +9,11 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parser
 {
     public sealed record FlagDescriptor(string Canonical, IReadOnlyList<string> Aliases);
 
-    public class CopyArgsParser : IArgsParser<CopyArgs>
+    public class ListArgsParser : IArgsParser<CopyArgs>
     {
         public CopyArgs Parse(IReadOnlyList<Token> tokens, IntentParseResult intent)
         {
-            //1. Make parse tree 
+            //1. Make parse tree
 
             CopyParseTree tree = new CopyParseTree
             {
@@ -76,10 +76,10 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parser
             return new PathExtractionResult(paths);
         }
 
-        private IReadOnlyList<string> ExtractPathsCore( 
-            IReadOnlyList<Token> tokens, 
-            IReadOnlyList<int> markers, 
-            IReadOnlyList<int> forbiddenIndexes, 
+        private IReadOnlyList<string> ExtractPathsCore(
+            IReadOnlyList<Token> tokens,
+            IReadOnlyList<int> markers,
+            IReadOnlyList<int> forbiddenIndexes,
             int defaultIndex)
         {
             var paths = new List<string>();
@@ -104,7 +104,7 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parser
             return paths;
         }
 
-        bool IsInvalidCandidate( int index, int tokenCount, IReadOnlyCollection<int> sourceMarkers, IReadOnlyCollection<int> destinationMarkers)
+        bool IsInvalidCandidate(int index, int tokenCount, IReadOnlyCollection<int> sourceMarkers, IReadOnlyCollection<int> destinationMarkers)
         {
             return index >= tokenCount || sourceMarkers.Contains(index) || destinationMarkers.Contains(index);
         }

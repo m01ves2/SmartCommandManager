@@ -13,15 +13,15 @@ namespace SmartCommandManager.NLP.Intent.Parsers
             var candidates = GetCandidates(tokens, intents);
 
             if (candidates.Count == 0)
-                throw new IntentNotFoundException("no intents found");
+                throw new IntentParsingException("no intents found");
 
             if (candidates.Count > 1)
-                throw new AmbiguousIntentException("more than one intent found");
+                throw new IntentParsingException("more than one intent found");
 
             var first = candidates.First(); //единственный паттерн остался
 
             if (first.Value.Count > 1)
-                throw new IntentRepeatedException("intent found multiple times");
+                throw new IntentParsingException("intent found multiple times");
 
             var intent = first.Key;
             var index = first.Value[0]; // единственная команда встретилась единственный раз. индекс токена

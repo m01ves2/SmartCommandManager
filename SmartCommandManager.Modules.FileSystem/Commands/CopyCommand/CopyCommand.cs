@@ -11,43 +11,13 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
         {
         }
 
-        protected override CommandResult Execute(CopyArgs args)
+        public override CommandResult Execute(CopyArgs args)
         {
-            (IEnumerable<string> flags, string source, string destination) = (args.Flags, args.Source, args.Destination);
+            var source = PathNormalize(args.SourcePath);
+            var destination = PathNormalize(args.DestinationPath);
 
-            if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(destination))
-                return new CommandResult { Status = CommandStatus.Error, Message = "source and destination paths required" };
-
-            source = PathNormalize(source);
-            destination = PathNormalize(destination);
-
-            CommandResult commandResult = _fs.Copy(flags, source, destination);
+            CommandResult commandResult = _fs.Copy(args.SourcePath, args.DestinationPath, args.Recursive, args.Overwrite);
             return commandResult;
         }
     }
-
-    //public class CopyCommand : BaseCommand
-    //{
-    //    public override string Name => "cp";
-    //    public override string Description => "Copy file or directory";
-    //    public override IEnumerable<string> NLPatterns { get; } = ["cp", "copy", "duplicate", "clone"];
-    //    public CopyCommand(IFileSystemService fs, CommandContext context) : base(fs, context)
-    //    {
-    //    }
-
-    //    public override CommandResult Execute(string[] args)
-    //    {
-
-    //        (IEnumerable<string> flags, string source, string destination) = ParseCommandArguments(args);
-
-    //        if (string.IsNullOrEmpty(source) || string.IsNullOrEmpty(destination))
-    //            return new CommandResult { Status = CommandStatus.Error, Message = "source and destination paths required" };
-
-    //        source = PathNormalize(source);
-    //        destination = PathNormalize(destination);
-
-    //        CommandResult commandResult = _fs.Copy(flags, source, destination);
-    //        return commandResult;
-    //    }
-    //}
 }

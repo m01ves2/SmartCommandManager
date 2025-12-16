@@ -219,6 +219,8 @@ Users define new commands in a mini-language.
 CommandContext reusability
 Keep conversational context across commands.
 
+Voice input/output module (like a Siri)
+
 9. Conclusion — What v1 is and is not
 
 SmartCommandManager v1 is:
