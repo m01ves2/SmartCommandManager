@@ -1,13 +1,18 @@
 ﻿namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
 {
+    public enum CopyMode { 
+        File,
+        Directory,
+        None
+    };
     public class CopyArgs
     {
-        public string SourcePath { get; init; }
-        public string DestinationPath { get; init; }
-        public bool Overwrite { get; init; }
-        public bool Recursive { get; init; }
-        public bool SkipIfExists { get; init; }
-        public bool HasWildcard { get; init; }
-
+        public string SourcePath { get; set; }
+        public string DestinationPath { get; set; }
+        public bool Overwrite { get; set; }
+        public bool Recursive { get; set; }
+        public bool SkipIfExists { get; set; }
+        public bool HasWildcard { get; set; }
+        public CopyMode CopyMode { get; set; }
     }
 }

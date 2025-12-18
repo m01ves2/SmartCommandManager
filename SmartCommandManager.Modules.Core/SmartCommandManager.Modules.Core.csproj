@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Commands\HelpCommand\NLP\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

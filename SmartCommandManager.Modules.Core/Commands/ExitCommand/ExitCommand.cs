@@ -8,7 +8,7 @@ namespace SmartCommandManager.Modules.Core.Commands.ExitCommand
     {
         public override CommandInfo CommandInfo { get; }  = new("exit", "Exit from application.", CommandCategory.Core);
 
-        protected override CommandResult Execute(Unit args)
+        public override CommandResult Execute(Unit args)
         {
             return new CommandResult() { Status = CommandStatus.Exit, Message = "Exiting..." };
         }

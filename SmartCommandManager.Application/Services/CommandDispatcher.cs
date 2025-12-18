@@ -12,14 +12,16 @@ namespace SmartCommandManager.Application.Services
 {
     public class CommandDispatcher : ICommandDispatcher
     {
-        private readonly CommandContext _commandContext;
         private readonly CommandRegistry _commandRegistry;
         private readonly IIntentParser _intentParser;
         private readonly ILogger<CommandDispatcher> _logger;
         private readonly ITokenizer _tokenizer;
-        public CommandDispatcher(CommandContext commandContext, CommandRegistry commandRegistry, ITokenizer tokenizer, IIntentParser intentParser, ILogger<CommandDispatcher> logger)
+        public CommandDispatcher(
+            CommandRegistry commandRegistry, 
+            ITokenizer tokenizer, 
+            IIntentParser intentParser, 
+            ILogger<CommandDispatcher> logger)
         {
-            _commandContext = commandContext;
             _commandRegistry = commandRegistry;
             _tokenizer = tokenizer;
             _intentParser = intentParser; 
@@ -50,24 +52,19 @@ namespace SmartCommandManager.Application.Services
             }
             catch (CommandNotFoundException ex) {
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.NotFound, Message = $"Command not registered: {ex.Message}" };
-                _logger.LogError($"Command not registered: {ex.Message}");
+                //_logger.LogError($"Command not registered: {ex.Message}");
                 return commandResult;
             }
             catch (InvalidOperationException ex) {
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Operation error: {ex.Message}" };
-                _logger.LogError($"Operation error: {ex.Message}");
+                //_logger.LogError($"Operation error: {ex.Message}");
                 return commandResult;
             }
             catch (Exception ex) {
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Unexpected error: {ex.Message}" };
-                _logger.LogError($"Operation error: {ex.Message}");
+                //_logger.LogError($"Operation error: {ex.Message}");
                 return commandResult;
             }
-        }
-
-        public string GetPrompt()
-        {
-            return _commandContext.CurrentDirectory;
         }
     }
 }

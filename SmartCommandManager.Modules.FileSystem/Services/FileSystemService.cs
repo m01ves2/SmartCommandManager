@@ -21,24 +21,20 @@ namespace SmartCommandManager.Modules.FileSystem.Services
             _directoryService = directoryService;
         }
 
-        public CommandResult Copy(IEnumerable<string> flags, string source, string destination)
+        public CommandResult CopyFile(string sourceFile, string destinationFile, bool overwrite)
         {
-            ItemType type = GetItemType(source);
-
-            if (type == ItemType.FILE) {
-                _fileService.CopyFile(source, destination); //TODO: flags, e.g. File.Copy(source, destination, overwrite: true);
-                return new CommandResult { Status = CommandStatus.Success, Message = $"File copied to {destination}" };
-            }
-            else if (type == ItemType.DIRECTORY) {
-                _directoryService.CopyDirectory(source, destination); //TODO flags, e.g. Directory.Copy(source, destination, recoursively);
-                return new CommandResult { Status = CommandStatus.Success, Message = $"Directory copied to {destination}" };
-            }
-            else {
-                return new CommandResult { Status = CommandStatus.Error, Message = "No such file or directory" };
-            }
+            _fileService.CopyFile(sourceFile, destinationFile, overwrite);
+            return new CommandResult { Status = CommandStatus.Success, Message = $"File ${sourceFile} copied to {destinationFile}" };
         }
 
-        public CommandResult Create(IEnumerable<string> flags, string source)
+        public CommandResult CopyDirectory(string sourceDirectory, string destinationDirectory, bool recursive)
+        {
+            _directoryService.CopyDirectory(sourceDirectory, destinationDirectory, recursive);
+            return new CommandResult { Status = CommandStatus.Success, Message = $"Directory ${sourceDirectory} copied to {destinationDirectory}" };
+        }
+
+
+        public CommandResult Create(IEnumerable<string> flags, string source) //TODO
         {
             ItemType type;
             if (flags.Count() == 0 || !(flags.Contains("d")))
@@ -56,7 +52,7 @@ namespace SmartCommandManager.Modules.FileSystem.Services
             }
         }
 
-        public CommandResult Delete(IEnumerable<string> flags, string source)
+        public CommandResult Delete(string source, bool recursive) //TODO
         {
             ItemType type = GetItemType(source);
 
@@ -65,15 +61,15 @@ namespace SmartCommandManager.Modules.FileSystem.Services
                 return new CommandResult { Status = CommandStatus.Success, Message = $"Deleted file {source}" };
             }
             else if (type == ItemType.DIRECTORY) {
-                _directoryService.DeleteDirectory(source);
+                _directoryService.DeleteDirectory(source, recursive);
                 return new CommandResult { Status = CommandStatus.Success, Message = $"Deleted directory {source}" };
             }
             else {
-                return new CommandResult { Status = CommandStatus.Error, Message = "No such file or directory" };
+                return new CommandResult { Status = CommandStatus.Failed, Message = "No such file or directory" };
             }
         }
 
-        public CommandResult List(IEnumerable<string> flags, string source)
+        public CommandResult List(IEnumerable<string> flags, string source) //TODO
         {
             ItemType type = GetItemType(source);
             if (type == ItemType.FILE) {
@@ -93,15 +89,15 @@ namespace SmartCommandManager.Modules.FileSystem.Services
                 return new CommandResult() { Status = CommandStatus.Success, Message = sb.ToString() };
             }
             else {
-                return new CommandResult() { Status = CommandStatus.Error, Message = "No such file or directory" };
+                return new CommandResult() { Status = CommandStatus.Failed, Message = "No such file or directory" };
             }
         }
 
-        public CommandResult Move(IEnumerable<string> flags, string source, string destination)
+        public CommandResult Move(string source, string destination, bool overwrite) //TODO
         {
             ItemType type = GetItemType(source);
             if (type == ItemType.FILE) {
-                _fileService.MoveFile(source, destination);
+                _fileService.MoveFile(source, destination, overwrite);
                 return new CommandResult { Status = CommandStatus.Success, Message = $"File moved to {destination}" };
             }
             else if (type == ItemType.DIRECTORY) {
@@ -109,11 +105,11 @@ namespace SmartCommandManager.Modules.FileSystem.Services
                 return new CommandResult { Status = CommandStatus.Success, Message = $"Directory moved to {destination}" };
             }
             else {
-                return new CommandResult { Status = CommandStatus.Error, Message = "No such file or directory" };
+                return new CommandResult { Status = CommandStatus.Failed, Message = "No such file or directory" };
             }
         }
 
-        private ItemType GetItemType(string path)
+        public ItemType GetItemType(string path)
         {
             ItemType type;
             if (_fileService.IsFile(path))

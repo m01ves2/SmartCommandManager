@@ -36,6 +36,18 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parser
 
             //3. Make command context - Args
             //return CopyBuilder.Build(tree);
+
+            CopyArgs copyArgs = new CopyArgs()
+            {
+                SourcePath = tree.SourcePaths.Paths.FirstOrDefault() ?? "",
+                DestinationPath = tree.DestinationPaths.Paths.FirstOrDefault() ?? "",
+                HasWildcard = tree.Wildcard.HasWildcard,
+                Overwrite = false,
+                Recursive = false,
+                SkipIfExists = false,
+            };
+
+            return copyArgs;
         }
 
         private MarkerExtractionResult ExtractSourceMarkers(IReadOnlyList<Token> tokens, CopyParseTree tree)
@@ -134,7 +146,7 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parser
         {
             string[] wildcardMarkers = ["*", "all"];
             int intentIndex = tree.Intent.IntentIndex;
-            WildcardExtractionResult wildcardExtractionResult = WildcardExtractor.Extract(tokens, intentIndex, wildcardMarkers);
+            WildcardExtractionResult wildcardExtractionResult = WildcardExtractor.Extract(tokens, wildcardMarkers);
             return wildcardExtractionResult;
         }
 

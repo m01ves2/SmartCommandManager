@@ -2,55 +2,58 @@
 { 
     public class FileService : IFileService
     {
-        public void CreateFile(string path)
+        public void CreateFile(string sourceFile)
         {
             try {
-                using (var fs = File.Create(path)) {
+                using (var fs = File.Create(sourceFile)) {
                     // File is created!
                 }
             }
             catch (Exception ex) {
-                throw new InvalidOperationException($"Cannot create file '{path}': {ex.Message}", ex);
+                throw new InvalidOperationException($"Cannot create file '{sourceFile}': {ex.Message}", ex);
             }
         }
 
-        public void DeleteFile(string path)
+        public void DeleteFile(string t)
         {
             try {
-                File.Delete(path);
+                File.Delete(sourceFile);
             }
             catch (Exception ex) {
-                throw new InvalidOperationException($"Cannot delete file '{path}': {ex.Message}", ex);
+                throw new InvalidOperationException($"Cannot delete file '{SourceFile}': {ex.Message}", ex);
             }
         }
 
-        public void CopyFile(string source, string destination)
+        public void CopyFile(string sourceFile, string destinationFile, bool overwrite)
         {
             try {
-                File.Copy(source, destination, true);
+                File.Copy(sourceFile, destinationFile, overwrite);
             }
             catch (Exception ex) {
-                throw new InvalidOperationException($"Cannot copy file '{source}' to '{destination}': {ex.Message}", ex);
+                throw new InvalidOperationException($"Cannot copy file '{sourceFile}' to '{destinationFile}': {ex.Message}", ex);
             }
         }
 
-        public void MoveFile(string source, string destination)
+        public void MoveFile(string sourceFile, string destinationFile, bool overwrite)
         {
             try {
-                File.Move(source, destination);
+                //if(!IsFile(destination)) {
+                //    destination += "/" + source;
+                //}
+                File.Move(sourceFile, destinationFile, overwrite);
             }
             catch (Exception ex) {
-                throw new InvalidOperationException($"Cannot move file '{source}' to '{destination}': {ex.Message}", ex);
+                throw new InvalidOperationException($"Cannot move file '{sourceFile}' to '{destinationFile}': {ex.Message}", ex);
             }
         }
 
-        public FileInfo GetFileInfo(string path)
+        public FileInfo GetFileInfo(string sourceFile)
         {
             try {
-                return new FileInfo(path);
+                return new FileInfo(sourceFile);
             }
             catch (Exception ex) {
-                throw new InvalidOperationException($"Cannot get info for file '{path}': {ex.Message}", ex);
+                throw new InvalidOperationException($"Cannot get info for file '{sourceFile}': {ex.Message}", ex);
             }
         }
 

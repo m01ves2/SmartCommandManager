@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Commands\ListCommand\**" />
+    <EmbeddedResource Remove="Commands\ListCommand\**" />
+    <None Remove="Commands\ListCommand\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SmartCommandManager.Domain\SmartCommandManager.Domain.csproj" />
     <ProjectReference Include="..\SmartCommandManager.NLP\SmartCommandManager.NLP.csproj" />
   </ItemGroup>

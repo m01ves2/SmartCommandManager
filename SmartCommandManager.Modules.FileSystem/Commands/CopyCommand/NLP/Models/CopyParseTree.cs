@@ -1,4 +1,4 @@
-﻿using SmartCommandManager.NLP.Command.Models;
+﻿using SmartCommandManager.NLP.Args.Models;
 using SmartCommandManager.NLP.Intent.Models;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Models

@@ -2,17 +2,17 @@
 {
     public static class Bootstrap
     {
-        public static IServiceProvider Build()
-        {
-            var services = new ServiceCollection();
+        //public static IServiceProvider Build()
+        //{
+        //    var services = new ServiceCollection();
 
-            services
-                .AddDomain()
-                .AddApplication()
-                .AddInfrastructure()
-                .AddFileSystemModule();
+        //    services
+        //        .AddDomain()
+        //        .AddApplication()
+        //        .AddInfrastructure()
+        //        .AddFileSystemModule();
 
-            return services.BuildServiceProvider();
-        }
+        //    return services.BuildServiceProvider();
+        //}
     }
 }

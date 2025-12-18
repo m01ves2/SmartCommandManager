@@ -11,7 +11,7 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand
         {
         }
 
-        protected override CommandResult Execute(ListArgs args)
+        public override CommandResult Execute(ListArgs args)
         {
             (IEnumerable<string> flags, string source) = (args.Flags, args.Source);
 

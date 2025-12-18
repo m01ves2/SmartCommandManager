@@ -7,7 +7,7 @@ using SmartCommandManager.NLP.Shared.Models;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parsers
 {
-    public sealed record FlagDescriptor(string Canonical, IReadOnlyList<string> Aliases);
+    //public sealed record FlagDescriptor(string Canonical, IReadOnlyList<string> Aliases);
 
     public class ListArgsParser : IArgsParser<CopyArgs>
     {

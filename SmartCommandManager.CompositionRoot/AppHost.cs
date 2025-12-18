@@ -1,43 +1,46 @@
-﻿namespace SmartCommandManager.CompositionRoot
+﻿using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+
+namespace SmartCommandManager.CompositionRoot
 {
     public sealed class AppHost
     {
-        public IServiceProvider Provider { get; }
+        //public IServiceProvider Provider { get; }
 
-        private AppHost(IServiceProvider provider)
-        {
-            Provider = provider;
-        }
+        //private AppHost(IServiceProvider provider)
+        //{
+        //    Provider = provider;
+        //}
 
-        public static AppHost Build(string[] args, Action<IServiceCollection> configureUI)
-        {
-            // Создаём Serilog вручную (root-logger)
-            var logger = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+        //public static AppHost Build(string[] args, Action<IServiceCollection> configureUI)
+        //{
+        //    // Создаём Serilog вручную (root-logger)
+        //    var logger = new LoggerConfiguration()
+        //        .WriteTo.Console()
+        //        .WriteTo.File("log-.txt", rollingInterval: RollingInterval.Day)
+        //        .CreateLogger();
 
-            var services = new ServiceCollection();
+        //    var services = new ServiceCollection();
 
-            // Logging
-            services.AddLogging(b =>
-            {
-                b.AddSerilog(logger, dispose: true);
-            });
+        //    // Logging
+        //    services.AddLogging(b =>
+        //    {
+        //        b.AddSerilog(logger, dispose: true);
+        //    });
 
-            // Core + Commands + App services
-            services.AddSmartFileManagerCore();
+        //    // Core + Commands + App services
+        //    services.AddSmartFileManagerCore();
 
-            // UI (настраивает хост-приложение, не композиционный слой!)
-            configureUI?.Invoke(services);
+        //    // UI (настраивает хост-приложение, не композиционный слой!)
+        //    configureUI?.Invoke(services);
 
-            var provider = services.BuildServiceProvider();
+        //    var provider = services.BuildServiceProvider();
 
-            // Final wiring of HelpCommand etc.
-            CompositionRoot.ConfigureCommands(provider);
+        //    // Final wiring of HelpCommand etc.
+        //    CompositionRoot.ConfigureCommands(provider);
 
-            return new AppHost(provider);
-        }
+        //    return new AppHost(provider);
+        //}
 
     }
 }

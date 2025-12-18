@@ -1,4 +1,4 @@
-﻿namespace SmartCommandManager.NLP.Command.Models
+﻿namespace SmartCommandManager.NLP.Args.Models
 {
     public sealed record PathExtractionResult(IReadOnlyList<string> Paths)
     {

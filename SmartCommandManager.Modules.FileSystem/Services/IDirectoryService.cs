@@ -4,8 +4,8 @@
     {
         string[] ListDirectory(string path);
         void CreateDirectory(string path);
-        void DeleteDirectory(string path);
-        void CopyDirectory(string source, string destination);
+        void DeleteDirectory(string path, bool recursive);
+        void CopyDirectory(string source, string destination, bool recursive);
         void MoveDirectory(string source, string destination);
         bool IsDirectory(string source);
     }

@@ -16,7 +16,15 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand
             var source = PathNormalize(args.SourcePath);
             var destination = PathNormalize(args.DestinationPath);
 
-            CommandResult commandResult = _fs.Copy(args.SourcePath, args.DestinationPath, args.Recursive, args.Overwrite);
+            CommandResult commandResult;
+            if (args.CopyMode == CopyMode.File) {
+                commandResult = _fs.CopyFile(args.SourcePath, args.DestinationPath, args.Overwrite);
+            }
+            else if (args.CopyMode == CopyMode.Directory) {
+                commandResult = _fs.CopyDirectory(args.SourcePath, args.DestinationPath, args.Recursive);
+            }
+            else
+                commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Operation failed. No such file or directory" };
             return commandResult;
         }
     }

@@ -4,11 +4,15 @@ namespace SmartCommandManager.Modules.FileSystem.Services
 {
     public interface IFileSystemService
     {
-        CommandResult Copy(IEnumerable<string> flags, string source, string destination);
-        CommandResult Delete(IEnumerable<string> flags, string source);
+        CommandResult CopyFile(string sourceFile, string destinationFile, bool overwrite);
+        CommandResult CopyDirectory(string sourceDirectory, string destinationDirectory, bool recursive);
+
+
+        CommandResult Delete(string source, bool recursive);
         CommandResult Create(IEnumerable<string> flags, string source);
-        CommandResult Move(IEnumerable<string> flags, string source, string destination);
+        CommandResult Move(string source, string destination, bool overwrite);
         CommandResult List(IEnumerable<string> flags, string source);
+        ItemType GetItemType(string path);
 
     }
 }

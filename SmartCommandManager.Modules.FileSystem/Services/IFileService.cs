@@ -6,8 +6,8 @@
         FileInfo GetFileInfo(string path);
         void CreateFile(string path);
         void DeleteFile(string path);
-        void CopyFile(string source, string destination);
-        void MoveFile(string source, string destination);
+        void CopyFile(string source, string destination, bool overwrite);
+        void MoveFile(string source, string destination, bool overwrite);
 
         bool IsFile(string source);
     }

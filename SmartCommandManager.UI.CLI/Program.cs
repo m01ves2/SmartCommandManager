@@ -1,5 +1,11 @@
-﻿using SmartCommandManager.NLP.Shared.Models;
+﻿using SmartCommandManager.Application.Services;
+using SmartCommandManager.Domain.Commands.Models;
+using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand;
+using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parsers;
+using SmartCommandManager.Modules.FileSystem.Services;
+using SmartCommandManager.NLP.Intent.Parsers;
 using SmartCommandManager.NLP.Shared.Tokenizer;
+
 
 namespace SmartCommandManager.UI.CLI
 {
@@ -7,30 +13,35 @@ namespace SmartCommandManager.UI.CLI
     {
         private static void Main(string[] args)
         {
-            //var host = AppHost.Build(args, services =>
-            //{
-            //    services.AddSingleton<IUI, ConsoleUI>();
-            //});
+            //1.UI state
+            CommandContext context = new CommandContext();
 
-            //var ui = host.Provider.GetRequiredService<IUI>();
+            //2.Infrastructure
+            var tokenizer = new Tokenizer();
+            var registry = new CommandRegistry();
+            var intentParser = new IntentParser();
 
-            // ConsoleUI has Run(), but IUI doesn't.
-            //((ConsoleUI)ui).Run();
+            var fileService = new FileService();
+            var directoryService = new DirectoryService();
+            var fileSystemService = new FileSystemService(fileService, directoryService);
 
-            string input = "please, copy 'all ' files \"from 'folder1' \" to folder2";
+            //3.Command Copy
+            var copyCommand = new CopyCommand(fileSystemService, context);
+            var copyArgsParser = new CopyArgsParser();
 
-            Tokenizer tokenizer = new Tokenizer();
-            IEnumerable<Token> tokens =  tokenizer.Tokenize(input);
-            foreach (var item in tokens) {
-                Console.WriteLine(item.Value);
-            }
+            //4.Pipeline
+            var copyIntentDescriptor = CopyIntentDescriptor.Descriptor;
+            var copyPipeline = new CommandPipeline<CopyArgs>(copyCommand, copyArgsParser);
 
-            // public CommandDispatcher(CommandContext commandContext, CommandRegistry commandRegistry, ITokenizer tokenizer, IIntentParser nlp, ILogger<CommandDispatcher> logger)
-            //CommandContext commandContext = new CommandContext(tokens.ToList().AsReadOnly(), input);
-            //CommandRegistry commandRegistry = new CommandRegistry();
+            //Register commands/intents
+            registry.Register(copyIntentDescriptor, copyPipeline);
 
-            //CommandDispatcher commandDispatcher = new CommandDispatcher(tokenizer);
-            Console.ReadKey();
+            //Dispatcher
+            CommandDispatcher commandDispatcher = new CommandDispatcher(registry, tokenizer, intentParser, null);
+
+            //UI
+            var ui = new ConsoleUI(commandDispatcher, context);
+            ui.Run();
         }
     }
 }

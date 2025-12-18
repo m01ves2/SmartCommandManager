@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SmartCommandManager.Application\SmartCommandManager.Application.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.Modules.FileSystem\SmartCommandManager.Modules.FileSystem.csproj" />
   </ItemGroup>
 
 </Project>
