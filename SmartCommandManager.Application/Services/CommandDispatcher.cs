@@ -7,6 +7,7 @@ using SmartCommandManager.NLP.Intent.Models;
 using SmartCommandManager.NLP.Intent.Parsers;
 using SmartCommandManager.NLP.Shared.Models;
 using SmartCommandManager.NLP.Shared.Tokenizer;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmartCommandManager.Application.Services
 {
@@ -50,6 +51,11 @@ namespace SmartCommandManager.Application.Services
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Wrong commands arguments: {ex.Message}" };
                 return commandResult;
             }
+            catch(ValidationException ex) {
+                CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Invalid commands arguments: {ex.Message}" };
+                return commandResult;
+            }
+
             catch (CommandNotFoundException ex) {
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.NotFound, Message = $"Command not registered: {ex.Message}" };
                 //_logger.LogError($"Command not registered: {ex.Message}");

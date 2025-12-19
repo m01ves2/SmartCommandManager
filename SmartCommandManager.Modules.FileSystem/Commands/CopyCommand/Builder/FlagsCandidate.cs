@@ -2,9 +2,17 @@
 {
     public class FlagsCandidate
     {
-        bool Overwite { get; set; }  
-        bool Recursive { get; set; }
-        bool SkipIfExists { get; set; }
-        bool HasWildcard { get; set; }
+        public bool Recursive { get; set; }
+        public bool Overwrite { get; set; }  
+        public bool SkipIfExists { get; set; }
+        public bool HasWildcard { get; set; }
+
+        public FlagsCandidate(bool recursive, bool overwrite, bool skipIfExists, bool hasWildcard) 
+        { 
+            Recursive = recursive;
+            Overwrite = overwrite;
+            SkipIfExists = skipIfExists;
+            HasWildcard = hasWildcard;
+        }
     }
 }
