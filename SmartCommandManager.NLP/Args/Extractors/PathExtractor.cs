@@ -1,5 +1,4 @@
-﻿using SmartCommandManager.NLP.Command.Models;
-using SmartCommandManager.NLP.Shared.Models;
+﻿using SmartCommandManager.NLP.Shared.Models;
 
 namespace SmartCommandManager.NLP.Command.Extractors
 {

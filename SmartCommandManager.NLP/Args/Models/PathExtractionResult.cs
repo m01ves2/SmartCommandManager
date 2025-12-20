@@ -1,7 +1,16 @@
 ﻿namespace SmartCommandManager.NLP.Args.Models
 {
-    public sealed record PathExtractionResult(IReadOnlyList<string> Paths)
+    public sealed class PathExtractionResult : IExtractionResult
     {
-        public static readonly PathExtractionResult Empty = new PathExtractionResult(Array.Empty<string>());
+        public IReadOnlyList<string> Paths { get; }
+        public IReadOnlyCollection<int> Indexes { get; }
+
+        public PathExtractionResult(IReadOnlyList<string> paths, IReadOnlyCollection<int> indexes)
+        {
+            Paths = paths;
+            Indexes = indexes;
+        }
+
+        public static PathExtractionResult Empty => new(Array.Empty<string>(), Array.Empty<int>());
     }
 }

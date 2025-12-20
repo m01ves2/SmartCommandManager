@@ -1,12 +1,12 @@
-﻿using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Models;
+﻿using SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Models;
 using SmartCommandManager.NLP.Args.Exceptions;
 using SmartCommandManager.NLP.Args.Validators;
 
-namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Validators
+namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Validators
 {
     public static class SourceSyntaxValidator
     {
-        public static void Validate(CopyParseTree  tree)
+        public static void Validate(ListParseTree tree)
         {
             IReadOnlyList<string> paths = tree.SourcePaths.Paths;
 

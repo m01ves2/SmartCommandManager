@@ -1,5 +1,6 @@
 ﻿using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.Modules.FileSystem.Services;
+using System.Text;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand
 {
@@ -13,15 +14,20 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand
 
         public override CommandResult Execute(ListArgs args)
         {
-            (IEnumerable<string> flags, string source) = (args.Flags, args.Source);
+            var source = PathNormalize(args.SourcePath);
+            CommandResult commandResult;
 
-            if (string.IsNullOrWhiteSpace(source))
-                source = ".";
-
-            source = PathNormalize(source);
-
-            CommandResult commandResult = _fs.List(flags, source);
+            if (args.ListMode == ListMode.Directory) {
+                commandResult = _fs.ListDirectory(source, args.LongListing, args.DirectoryOnly);
+            }
+            else if(args.ListMode == ListMode.File) {
+                commandResult = _fs.ListFile(args.SourcePath);//GetFileInfo(source);
+            }
+            else 
+                commandResult = new CommandResult() { Status = CommandStatus.NotFound, Message = "No such file or directory" };
             return commandResult;
         }
     }
 }
+       
+    

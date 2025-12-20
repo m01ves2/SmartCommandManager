@@ -80,7 +80,6 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.Builder
         #region
         private FlagsCandidate BuildFlags(CopyParseTree tree)
         {
-            //ValidateFlags(flags)
             bool recursive = tree.Flags.Flags.Contains("recursive");
             bool overwrite = tree.Flags.Flags.Contains("overwrite");
             bool skipIfExists = tree.Flags.Flags.Contains("skip");

@@ -7,7 +7,6 @@ using SmartCommandManager.NLP.Intent.Models;
 using SmartCommandManager.NLP.Intent.Parsers;
 using SmartCommandManager.NLP.Shared.Models;
 using SmartCommandManager.NLP.Shared.Tokenizer;
-using System.ComponentModel.DataAnnotations;
 
 namespace SmartCommandManager.Application.Services
 {
@@ -51,7 +50,7 @@ namespace SmartCommandManager.Application.Services
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Wrong commands arguments: {ex.Message}" };
                 return commandResult;
             }
-            catch(ValidationException ex) {
+            catch(NLP.Args.Exceptions.ValidationException ex) {
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Invalid commands arguments: {ex.Message}" };
                 return commandResult;
             }

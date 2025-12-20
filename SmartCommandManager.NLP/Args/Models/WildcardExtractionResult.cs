@@ -1,7 +1,18 @@
-﻿namespace SmartCommandManager.NLP.Args.Models
+﻿
+namespace SmartCommandManager.NLP.Args.Models
 {
-    public sealed record WildcardExtractionResult(bool HasWildcard)
+    public sealed class WildcardExtractionResult : IExtractionResult
     {
-        public static readonly WildcardExtractionResult None = new WildcardExtractionResult(false);
+        bool HasWildcard { get; }
+        public IReadOnlyCollection<int> Indexes { get; }
+
+        public WildcardExtractionResult(bool hasWildcard, IReadOnlyCollection<int> indexes)
+        {
+            HasWildcard = hasWildcard;
+            Indexes = indexes;
+        }
+
+        public static WildcardExtractionResult None => new(false, Array.Empty<int>());
+
     }
 }

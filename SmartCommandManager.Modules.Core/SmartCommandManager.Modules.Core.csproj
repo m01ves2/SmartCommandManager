@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\HelpCommand\NLP\" />
+    <Folder Include="Commands\ExitCommand\Builder\" />
+    <Folder Include="Commands\ExitCommand\NLP\Models\" />
+    <Folder Include="Commands\ExitCommand\NLP\Validators\" />
+    <Folder Include="Commands\HelpCommand\NLP\Models\" />
+    <Folder Include="Commands\HelpCommand\NLP\Validators\" />
     <Folder Include="Services\" />
   </ItemGroup>
 

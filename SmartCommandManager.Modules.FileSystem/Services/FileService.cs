@@ -14,13 +14,13 @@
             }
         }
 
-        public void DeleteFile(string t)
+        public void DeleteFile(string sourceFile)
         {
             try {
                 File.Delete(sourceFile);
             }
             catch (Exception ex) {
-                throw new InvalidOperationException($"Cannot delete file '{SourceFile}': {ex.Message}", ex);
+                throw new InvalidOperationException($"Cannot delete file '{sourceFile}': {ex.Message}", ex);
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using SmartCommandManager.NLP.Intent.Models;
 
-namespace SmartCommandManager.Modules.Thread.Commands
+namespace SmartCommandManager.Modules.Thread.Commands.PsCommand
 {
     public class PsIntentDescriptor
     {

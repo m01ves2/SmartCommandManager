@@ -9,7 +9,7 @@ namespace SmartCommandManager.Modules.Thread.Commands.PsCommand
     {
         public override CommandInfo CommandInfo { get; } = new("ps", "Show processes info", CommandCategory.Thread);
 
-        protected override CommandResult Execute(Unit args)
+        public override CommandResult Execute(Unit args)
         {
             // Get all running processes
             Process[] processes = Process.GetProcesses();

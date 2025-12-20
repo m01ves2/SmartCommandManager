@@ -29,6 +29,7 @@ namespace SmartCommandManager.Modules.FileSystem.Services
                 var entries = Directory.GetFileSystemEntries(path);
                 // Преобразуем абсолютные пути в относительные
                 return entries.Select(entry => Path.GetRelativePath(path, entry)).ToArray();
+                
             }
             catch (Exception ex) {
                 throw new InvalidOperationException($"Cannot list directory '{path}': {ex.Message}", ex);

@@ -1,7 +1,14 @@
 ﻿namespace SmartCommandManager.NLP.Args.Models
 {
-    public sealed record MarkerExtractionResult(IReadOnlyList<int> Indexes)
+    public sealed class MarkerExtractionResult : IExtractionResult
     {
-        public static readonly MarkerExtractionResult Empty = new MarkerExtractionResult(Array.Empty<int>());
+        public IReadOnlyCollection<int> Indexes { get; }
+
+        public MarkerExtractionResult(IReadOnlyCollection<int> indexes)
+        {
+            Indexes = indexes;
+        }
+
+        public static MarkerExtractionResult Empty => new(Array.Empty<int>());
     }
 }
