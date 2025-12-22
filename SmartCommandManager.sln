@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.Modules
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.NLP", "SmartCommandManager.NLP\SmartCommandManager.NLP.csproj", "{EEED60AE-F062-4A54-A0C3-0256B4AAA4DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCommandManager.UI.WPF", "SmartCommandManager.UI.WPF\SmartCommandManager.UI.WPF.csproj", "{E6C46BEA-8A92-4FC9-B8E1-6B6F444A9519}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{EEED60AE-F062-4A54-A0C3-0256B4AAA4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEED60AE-F062-4A54-A0C3-0256B4AAA4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEED60AE-F062-4A54-A0C3-0256B4AAA4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6C46BEA-8A92-4FC9-B8E1-6B6F444A9519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6C46BEA-8A92-4FC9-B8E1-6B6F444A9519}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6C46BEA-8A92-4FC9-B8E1-6B6F444A9519}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6C46BEA-8A92-4FC9-B8E1-6B6F444A9519}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
