@@ -15,6 +15,8 @@ namespace SmartCommandManager.UI.CLI
 
         public void Run()
         {
+            Console.WriteLine("SmartCommandManager CLI");
+            Console.WriteLine("Type 'help' to see available commands");
 
             while (true) {
                 string prompt = _commandContext.CurrentDirectory + "> ";

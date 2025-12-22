@@ -14,13 +14,13 @@ namespace SmartCommandManager.Application.Services
     {
         private readonly CommandRegistry _commandRegistry;
         private readonly IIntentParser _intentParser;
-        private readonly ILogger<CommandDispatcher> _logger;
+        private readonly ILogger _logger;
         private readonly ITokenizer _tokenizer;
         public CommandDispatcher(
             CommandRegistry commandRegistry, 
             ITokenizer tokenizer, 
             IIntentParser intentParser, 
-            ILogger<CommandDispatcher> logger)
+            ILogger logger)
         {
             _commandRegistry = commandRegistry;
             _tokenizer = tokenizer;
