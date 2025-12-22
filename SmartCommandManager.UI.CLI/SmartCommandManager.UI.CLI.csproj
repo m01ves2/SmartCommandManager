@@ -12,10 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartCommandManager.Application\SmartCommandManager.Application.csproj" />
-    <ProjectReference Include="..\SmartCommandManager.Modules.Core\SmartCommandManager.Modules.Core.csproj" />
-    <ProjectReference Include="..\SmartCommandManager.Modules.FileSystem\SmartCommandManager.Modules.FileSystem.csproj" />
-    <ProjectReference Include="..\SmartCommandManager.Modules.Thread\SmartCommandManager.Modules.Thread.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.CompositionRoot\SmartCommandManager.CompositionRoot.csproj" />
   </ItemGroup>
 
 </Project>

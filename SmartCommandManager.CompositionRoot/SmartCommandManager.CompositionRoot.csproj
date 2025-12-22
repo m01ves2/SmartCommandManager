@@ -20,7 +20,7 @@
     <ProjectReference Include="..\SmartCommandManager.Domain\SmartCommandManager.Domain.csproj" />
     <ProjectReference Include="..\SmartCommandManager.Modules.Core\SmartCommandManager.Modules.Core.csproj" />
     <ProjectReference Include="..\SmartCommandManager.Modules.FileSystem\SmartCommandManager.Modules.FileSystem.csproj" />
-    <ProjectReference Include="..\SmartCommandManager.UI.CLI\SmartCommandManager.UI.CLI.csproj" />
+    <ProjectReference Include="..\SmartCommandManager.Modules.Thread\SmartCommandManager.Modules.Thread.csproj" />
   </ItemGroup>
 
 </Project>
