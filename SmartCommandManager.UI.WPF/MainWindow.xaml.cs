@@ -51,6 +51,9 @@ namespace SmartCommandManager.UI.WPF
             }
 
             ScrollToEnd();
+
+            if (result.Status == CommandStatus.Exit)
+                System.Windows.Application.Current.Shutdown();
         }
 
         private void WriteLine(string text)
