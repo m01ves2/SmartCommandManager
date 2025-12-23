@@ -7,7 +7,6 @@ namespace SmartCommandManager.CompositionRoot
     {
         public CommandDispatcher Dispatcher { get; }
         public CommandContext Context { get; }
-
         public ApplicationRoot(
             CommandDispatcher dispatcher,
             CommandContext context)

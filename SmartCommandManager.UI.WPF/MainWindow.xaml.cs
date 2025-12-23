@@ -20,51 +20,68 @@ namespace SmartCommandManager.UI.WPF
     {
         private readonly CommandDispatcher _dispatcher;
         private readonly CommandContext _context;
+        private readonly HtmlCommandResultFormatter _formatter;
 
-        //private readonly ICommandManager _commandManager;
+        private const string InitialHtml = """
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body {
+            background-color: black;
+            color: #e0e0e0;
+            font-family: Consolas, monospace;
+            margin: 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <pre>SmartCommandManager WPF</pre>
+</body>
+</html>
+""";
+
         public MainWindow(CommandDispatcher dispatcher, CommandContext context)
         {
             InitializeComponent();
+            OutputBrowser.NavigateToString(InitialHtml);
+
+            //OutputBrowser.Navigate(new Uri("https://google.com/"));
             _dispatcher = dispatcher;
             _context = context;
+            _formatter = new HtmlCommandResultFormatter();
 
-            WriteLine("SmartCommandManager started.");
             InputTextBox.Focus();
         }
         private void InputTextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.Enter)
-                return;
+            if (e.Key != Key.Enter) return;
 
             var input = InputTextBox.Text;
             InputTextBox.Clear();
-
-            if (string.IsNullOrWhiteSpace(input))
-                return;
-
-            WriteLine($"> {input}");
+            if (string.IsNullOrWhiteSpace(input)) return;
 
             var result = _dispatcher.Execute(input);
+            var html = _formatter.Format(result);
 
-            if (!string.IsNullOrEmpty(result.Message)) {
-                WriteLine(result.Message);
-            }
-
-            ScrollToEnd();
+            OutputBrowser.NavigateToString(html);
+            OutputBrowser.LoadCompleted += ScrollToEnd;
 
             if (result.Status == CommandStatus.Exit)
                 System.Windows.Application.Current.Shutdown();
         }
 
-        private void WriteLine(string text)
+        private void WriteLine(string html)
         {
-            OutputTextBox.AppendText(text + Environment.NewLine);
+            OutputBrowser.NavigateToString(html);
         }
 
-        private void ScrollToEnd()
+        private void ScrollToEnd(object? sender, System.Windows.Navigation.NavigationEventArgs e)
         {
-            OutputTextBox.CaretIndex = OutputTextBox.Text.Length;
-            OutputTextBox.ScrollToEnd();
+            OutputBrowser.InvokeScript( "execScript", new object[] { "window.scrollTo(0, document.body.scrollHeight);" });
+            OutputBrowser.LoadCompleted -= ScrollToEnd; // один раз
         }
     }
 }

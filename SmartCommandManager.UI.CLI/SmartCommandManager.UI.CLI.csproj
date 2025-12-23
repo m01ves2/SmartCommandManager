@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SmartCommandManager.Application\SmartCommandManager.Application.csproj" />
     <ProjectReference Include="..\SmartCommandManager.CompositionRoot\SmartCommandManager.CompositionRoot.csproj" />
   </ItemGroup>
 

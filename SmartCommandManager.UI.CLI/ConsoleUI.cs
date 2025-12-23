@@ -3,14 +3,16 @@ using SmartCommandManager.Domain.Commands.Models;
 
 namespace SmartCommandManager.UI.CLI
 {
-    public class ConsoleUI : IUI
+    public class ConsoleUI
     {
         private readonly ICommandDispatcher _dispatcher;
         private readonly CommandContext _commandContext;
-        public ConsoleUI(ICommandDispatcher dispatcher, CommandContext commandContext)
+        private readonly TextCommandResultFormatter _formatter;
+        public ConsoleUI(ICommandDispatcher dispatcher, CommandContext commandContext, TextCommandResultFormatter Formatter)
         {
             _dispatcher = dispatcher;
             _commandContext = commandContext;
+            _formatter = Formatter;
         }
 
         public void Run()
@@ -23,7 +25,9 @@ namespace SmartCommandManager.UI.CLI
                 string input = ReadInput(prompt);
 
                 CommandResult commandResult = _dispatcher.Execute(input);
-                WriteOutput(commandResult);
+                var output = _formatter.Format(commandResult);
+                WriteOutput(output);
+                //WriteOutput(commandResult);
 
                 if (commandResult.Status == CommandStatus.Exit) {
                     break;
@@ -31,26 +35,20 @@ namespace SmartCommandManager.UI.CLI
             }
         }
 
-        public void WriteOutput(CommandResult commandResult)
+        public void WriteOutput(FormattedOutput output)
         {
-            if (commandResult.Message == null) {
-                WriteError("Unknown result of command");
-                return;
+            switch (output.Style) {
+                case OutputStyle.OK: WriteOK(output.Content); break;
+                case OutputStyle.WARNING: WriteWarning(output.Content); break;
+                case OutputStyle.ERROR: WriteError(output.Content); break;
+                default: Write(output.Content); break;
             }
-
-            if (commandResult.Status == CommandStatus.Success)
-                WriteOK(commandResult.Message);
-            else if (commandResult.Status == CommandStatus.Failed)
-                WriteError(commandResult.Message);
-            else if (commandResult.Status == CommandStatus.Exit)
-                WriteWarning(commandResult.Message);
-            else
-                WriteWarning($"Unhandled status: {commandResult.Status}");
         }
 
         public string ReadInput(string prompt)
         {
             Write(prompt);
+            //WriteOutput(prompt);
             string input = (Console.ReadLine() ?? "").Trim();
             return input;
         }

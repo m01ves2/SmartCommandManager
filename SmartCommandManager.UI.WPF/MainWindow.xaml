@@ -7,23 +7,18 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
             <!-- Output -->
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <!-- Input -->
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- Output -->
-        <TextBox x:Name="OutputTextBox"
-                 Grid.Row="0"
-                 IsReadOnly="True"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"
-                 TextWrapping="Wrap"
-                 FontFamily="Consolas"
-                 Margin="0,0,0,10"/>
+        <!-- OUTPUT -->
+        <WebBrowser x:Name="OutputBrowser"
+                    Grid.Row="0"
+                    Margin="0,0,0,10"/>
 
-        <!-- Input -->
+        <!-- INPUT -->
         <TextBox x:Name="InputTextBox"
                  Grid.Row="1"
                  Height="28"

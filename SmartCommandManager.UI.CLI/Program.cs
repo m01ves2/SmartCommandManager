@@ -7,7 +7,8 @@ namespace SmartCommandManager.UI.CLI
         private static void Main(string[] args)
         {
             var app = CompositionRoot.CompositionRoot.Build();
-            var ui = new ConsoleUI(app.Dispatcher, app.Context);
+            var formatter = new TextCommandResultFormatter();
+            var ui = new ConsoleUI(app.Dispatcher, app.Context, formatter);
             ui.Run();
         }
     }
