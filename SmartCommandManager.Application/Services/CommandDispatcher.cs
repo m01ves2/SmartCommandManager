@@ -50,7 +50,7 @@ namespace SmartCommandManager.Application.Services
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Wrong commands arguments: {ex.Message}" };
                 return commandResult;
             }
-            catch(NLP.Args.Exceptions.ValidationException ex) {
+            catch (ValidationException ex) {
                 CommandResult commandResult = new CommandResult() { Status = CommandStatus.Failed, Message = $"Invalid commands arguments: {ex.Message}" };
                 return commandResult;
             }

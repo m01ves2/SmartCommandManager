@@ -76,9 +76,9 @@ namespace SmartCommandManager.CompositionRoot
             //parsers
             services.AddSingleton<IArgsParser<CopyArgs>, CopyArgsParser>();
             services.AddSingleton<IArgsParser<ListArgs>, ListArgsParser>();
-            services.AddSingleton<IArgsParser<Unit>, ExitArgsParser>();
-            services.AddSingleton<IArgsParser<Unit>, PsArgsParser>();
-            services.AddSingleton<IArgsParser<Unit>, HelpArgsParser>();
+            services.AddSingleton<ExitArgsParser>();
+            services.AddSingleton<PsArgsParser>();
+            services.AddSingleton<HelpArgsParser>();
 
             // Dispatcher
             services.AddSingleton<CommandDispatcher>();
@@ -109,7 +109,7 @@ namespace SmartCommandManager.CompositionRoot
                 PsIntentDescriptor.Descriptor,
                 new CommandPipeline<Unit>(
                     provider.GetRequiredService<PsCommand>(),
-                    provider.GetRequiredService<IArgsParser<Unit>>()
+                    provider.GetRequiredService<PsArgsParser>()
                 )
             );
 
@@ -118,7 +118,7 @@ namespace SmartCommandManager.CompositionRoot
                 ExitIntentDescriptor.Descriptor,
                 new CommandPipeline<Unit>(
                     provider.GetRequiredService<ExitCommand>(),
-                    provider.GetRequiredService<IArgsParser<Unit>>()
+                    provider.GetRequiredService<ExitArgsParser>()
                 )
             );
 
@@ -127,7 +127,7 @@ namespace SmartCommandManager.CompositionRoot
                 HelpIntentDescriptor.Descriptor,
                 new CommandPipeline<Unit>(
                     provider.GetRequiredService<HelpCommand>(),
-                    provider.GetRequiredService<IArgsParser<Unit>>()
+                    provider.GetRequiredService<HelpArgsParser>()
                 )
             );
         }

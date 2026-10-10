@@ -1,4 +1,5 @@
-﻿SmartFileManager is an educational yet architecturally correct file management application built using Clean Architecture principles, Dependency Injection, and modular project structure.
+﻿SmartFileManager is an educational yet architecturally correct file management application 
+built using Clean Architecture principles, Dependency Injection, and modular project structure.
 
 This project serves as a platform for learning:
 - Microsoft.Extensions.DependencyInjection
@@ -9,19 +10,19 @@ This project serves as a platform for learning:
 
 ---
 
-## 🚀 Features
+## Features
 
 - Directory navigation (`cd`)
 - Directory listing (`list`)
 - Copy, move, delete files
 - File creation
-- `help` command — displays all available commands
+- `help` command - displays all available commands
 - Colored console output (ConsoleUI)
 - Logging (console + file)
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 ```
 SmartFileManager/
 │
@@ -44,7 +45,7 @@ SmartFileManager/
 
 ---
 
-## ▶ Running the Application
+## Running the Application
 
 ```
 dotnet run --project SmartFileManager.UI.CLI
@@ -52,7 +53,7 @@ dotnet run --project SmartFileManager.UI.CLI
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - .NET 8
 - Microsoft.Extensions.DependencyInjection
@@ -62,14 +63,14 @@ dotnet run --project SmartFileManager.UI.CLI
 
 ---
 
-## 📌 Documentation
+## Documentation
 
 - [ARCHITECTURE.md](./ARCHITECTURE.md)
 - [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ---
 
-## 📅 Planned Features
+## Planned Features
 
 - Natural language command parsing
 - Command completion / prediction
@@ -80,7 +81,7 @@ dotnet run --project SmartFileManager.UI.CLI
 
 ---
 
-## 📜 License
+## License
 
 MIT (educational project)
 
