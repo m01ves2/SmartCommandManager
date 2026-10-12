@@ -46,6 +46,9 @@ namespace SmartCommandManager.UI.WPF
         public MainWindow(CommandDispatcher dispatcher, CommandContext context)
         {
             InitializeComponent();
+            OutputBrowser.LoadCompleted += ScrollToEnd; //когда загрузка завершится, вызови ScrollToEnd
+
+            //в нашем проекте мы сами встроили браузер для отображения результатов
             OutputBrowser.NavigateToString(InitialHtml);
 
             //OutputBrowser.Navigate(new Uri("https://google.com/"));
@@ -66,8 +69,7 @@ namespace SmartCommandManager.UI.WPF
             var result = _dispatcher.Execute(input);
             var html = _formatter.Format(result);
 
-            OutputBrowser.NavigateToString(html);
-            OutputBrowser.LoadCompleted += ScrollToEnd;
+            OutputBrowser.NavigateToString(html); //Загружает HTML во встроенный браузер
 
             if (result.Status == CommandStatus.Exit)
                 System.Windows.Application.Current.Shutdown();
@@ -80,8 +82,8 @@ namespace SmartCommandManager.UI.WPF
 
         private void ScrollToEnd(object? sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+            //внутри ScrollToEnd мы просим браузер выполнить JavaScript
             OutputBrowser.InvokeScript( "execScript", new object[] { "window.scrollTo(0, document.body.scrollHeight);" });
-            OutputBrowser.LoadCompleted -= ScrollToEnd; // один раз
         }
     }
 }

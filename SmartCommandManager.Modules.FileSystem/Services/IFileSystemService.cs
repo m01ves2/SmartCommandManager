@@ -16,7 +16,7 @@ namespace SmartCommandManager.Modules.FileSystem.Services
         CommandResult MoveFile(string source, string destination, bool overwrite);
         CommandResult MoveDirectory(string source, string destination);
 
-        CommandResult ListFile(string source);
+        CommandResult ListFile(string source, bool longListing);
         CommandResult ListDirectory(string source, bool longListing, bool directoryOnly);
         ItemType GetItemType(string path);
 

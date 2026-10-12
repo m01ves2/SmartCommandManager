@@ -70,24 +70,47 @@ namespace SmartCommandManager.Modules.FileSystem.Services
             return new CommandResult { Status = CommandStatus.Success, Message = $"Directory moved to {destination}" };
         }
 
-        public CommandResult ListFile(string source)
+        public CommandResult ListFile(string source, bool longListing)
         {
-            FileInfo fileInfo = _fileService.GetFileInfo(source);
-            return new CommandResult()
+            string name = Path.GetFileName(source);
+
+            return new CommandResult
             {
                 Status = CommandStatus.Success,
-                Message = $"{fileInfo.CreationTime}\t{fileInfo.Attributes}\t{fileInfo.Length}"
+                Message = longListing ? FormatLongEntry(source, name) : name
             };
         }
 
         public CommandResult ListDirectory(string source, bool longListing, bool directoryOnly)
         {
-            string[] items = _directoryService.ListDirectory(source);
+            string[] items = _directoryService.ListDirectory(source, directoryOnly);
+
             StringBuilder sb = new StringBuilder();
-            foreach (string i in items) {
-                sb.Append(i + "\n");
+
+            foreach (string item in items) {
+                if (longListing) {
+                    string itemPath = Path.Combine(source, item);
+                    sb.AppendLine(FormatLongEntry(itemPath, item));
+                }
+                else {
+                    sb.AppendLine(item);
+                }
             }
+
             return new CommandResult() { Status = CommandStatus.Success, Message = sb.ToString() };
+        }
+
+        private string FormatLongEntry(string path, string name)
+        {
+            if (_directoryService.IsDirectory(path)) {
+                DirectoryInfo info = _directoryService.GetDirectoryInfo(path);
+
+                return $"DIR\t-\t{info.LastWriteTime:yyyy-MM-dd HH:mm}\t{name}";
+            }
+
+            FileInfo fileInfo = _fileService.GetFileInfo(path);
+
+            return $"FILE\t{fileInfo.Length}\t{fileInfo.LastWriteTime:yyyy-MM-dd HH:mm}\t{name}";
         }
 
         public ItemType GetItemType(string path)

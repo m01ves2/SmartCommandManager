@@ -1,5 +1,4 @@
-﻿using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Models;
-using SmartCommandManager.Modules.FileSystem.Commands.ListCommand;
+﻿using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.Modules.FileSystem.Commands.ListCommand.Builder;
 using SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Models;
 using SmartCommandManager.Modules.FileSystem.Services;
@@ -8,13 +7,10 @@ using SmartCommandManager.NLP.Command.Extractors;
 using SmartCommandManager.NLP.Command.Parsers;
 using SmartCommandManager.NLP.Intent.Models;
 using SmartCommandManager.NLP.Shared.Models;
-using System;
 using System.Collections.ObjectModel;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Parsers
 {
-    public sealed record FlagDescriptor(string Canonical, IReadOnlyList<string> Aliases);
-
     public class ListArgsParser : IArgsParser<ListArgs>
     {
         private readonly IFileSystemService _fs;
@@ -32,8 +28,8 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Parser
             };
 
             tree.SourceMarkers = ExtractSourceMarkers(tokens, tree);
-            tree.SourcePaths = ExtractSourcePaths(tokens, tree);
             tree.Flags = ExtractFlags(tokens, tree);
+            tree.SourcePaths = ExtractSourcePaths(tokens, tree);
             tree.Noise = ExtractNoise(tokens, tree);
 
             var listArgsBuilder = new ListArgsBuilder(_fs);
@@ -60,7 +56,8 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Parser
                 foreach (var markerIndex in markers) {
                     int candidateIndex = markerIndex + 1;
 
-                    if (IsInvalidCandidate(candidateIndex, tokens.Count, markers))
+                    if (IsInvalidCandidate(candidateIndex, tokens.Count, markers)
+                        || tree.Flags.Indexes.Contains(candidateIndex))
                         paths.Add("");
                     else {
                         paths.Add(tokens[candidateIndex].Value);
@@ -89,21 +86,16 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Parser
         {
             int intentIndex = tree.Intent.IntentIndex;
 
-            var flags = new List<FlagDescriptor>
-            {
-                new("longlisting", new[] { "-l", "--long", "longlisting" }),
-                new("directoryonly", new[] { "-d", "--directoryonly", "--directory" })
-            };
+            var flags = ListCommandFlags.All;
 
             var foundFlags = new List<string>();
             var foundIndexes = new List<int>();
 
             foreach (var flag in flags) {
-                FlagExtractionResult flagExtractionResult = FlagExtractor.Extract(tokens, flag.Aliases);
-                if (flagExtractionResult != FlagExtractionResult.Empty) {
-                    foundFlags.AddRange(flagExtractionResult.Flags);
-                    foundIndexes.AddRange(flagExtractionResult.Indexes);
-                }
+                FlagExtractionResult flagExtractionResult = FlagExtractor.Extract(tokens, flag);
+
+                foundFlags.AddRange(flagExtractionResult.Flags);
+                foundIndexes.AddRange(flagExtractionResult.Indexes);
             }
 
             return new FlagExtractionResult(foundFlags, foundIndexes);

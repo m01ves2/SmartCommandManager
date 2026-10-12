@@ -28,11 +28,8 @@ namespace SmartCommandManager.UI.WPF
     </style>
 </head>
 <body>
-    <pre>
-        <div class='status {style}'>[{result.Status}]</div>
-        <div>{Escape(result.Message)}</div>
-        {RenderData(result.Data)}
-    </pre>
+    <div class='status {style}'>[{result.Status}]</div>
+    <pre>{Escape(result.Message)} {RenderData(result.Data)}</pre>
 </body>
 </html>";
         }

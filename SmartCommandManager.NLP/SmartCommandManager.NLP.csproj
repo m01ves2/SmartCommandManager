@@ -11,4 +11,8 @@
     <None Remove="Intent\Parsers\IntentParser - SeniorDeveloper.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartCommandManager.Domain\SmartCommandManager.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

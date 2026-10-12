@@ -8,9 +8,9 @@ namespace SmartCommandManager.Modules.Core.Commands.HelpCommand
     {
         public override CommandInfo CommandInfo { get; } = new("help", "Help for application.", CommandCategory.Core);
 
-        private readonly Func<IEnumerable<CommandInfo>> _getCommands;
+        private readonly Func<IEnumerable<CommandHelpInfo>> _getCommands;
 
-        public HelpCommand(Func<IEnumerable<CommandInfo>> getCommands)
+        public HelpCommand(Func<IEnumerable<CommandHelpInfo>> getCommands)
         {
             _getCommands = getCommands;
         }
@@ -18,11 +18,46 @@ namespace SmartCommandManager.Modules.Core.Commands.HelpCommand
         public override CommandResult Execute(Unit args)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("--help: \n");
-            foreach (var cmd in _getCommands()) {
-                sb.Append($"{cmd.Name} - {cmd.Description}" + "\n");
+            sb.AppendLine("Available commands:");
+            sb.AppendLine();
+
+            foreach (var entry in _getCommands()) {
+                CommandInfo info = entry.Info;
+
+                sb.AppendLine($"{info.Name} - {info.Description}");
+
+                if (entry.Aliases.Count > 0) {
+                    sb.AppendLine(
+                        $"  Aliases: {string.Join(", ", entry.Aliases)}");
+                }
+
+                if (!string.IsNullOrWhiteSpace(info.Usage)) {
+                    sb.AppendLine($"  Usage: {info.Usage}");
+                }
+
+                if (info.Flags.Count > 0) {
+                    sb.AppendLine("  Flags:");
+
+                    foreach (var flag in info.Flags) {
+                        sb.AppendLine(
+                            $"    {string.Join(", ", flag.Aliases)} — {flag.Description}");
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(info.Details)) {
+                    sb.AppendLine(info.Details);
+                }
+
+                sb.Append("----------");
+                sb.AppendLine();
+                sb.AppendLine();
             }
-            return new CommandResult() { Status = CommandStatus.Success, Message = sb.ToString() };
+
+            return new CommandResult
+            {
+                Status = CommandStatus.Success,
+                Message = sb.ToString()
+            };
         }
     }
 }

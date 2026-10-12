@@ -1,4 +1,5 @@
-﻿using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.Builder;
+﻿using SmartCommandManager.Domain.Commands.Models;
+using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.Builder;
 using SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Models;
 using SmartCommandManager.Modules.FileSystem.Services;
 using SmartCommandManager.NLP.Args.Models;
@@ -10,8 +11,6 @@ using System.Collections.ObjectModel;
 
 namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parsers
 {
-    public sealed record FlagDescriptor(string Canonical, IReadOnlyList<string> Aliases);
-
     public class CopyArgsParser : IArgsParser<CopyArgs>
     {
         private readonly IFileSystemService _fs;
@@ -27,11 +26,11 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parser
                 Intent = intent,
             };
 
+            tree.Flags = ExtractFlags(tokens, tree);
             tree.SourceMarkers = ExtractSourceMarkers(tokens, tree);
             tree.DestinationMarkers = ExtractDestinationMarkers(tokens, tree);
             tree.SourcePaths = ExtractSourcePaths(tokens, tree);
             tree.DestinationPaths = ExtractDestinationPaths(tokens, tree);
-            tree.Flags = ExtractFlags(tokens, tree);
             tree.Wildcard = ExtractWildcard(tokens, tree);
             tree.Noise = ExtractNoise(tokens, tree);
 
@@ -118,21 +117,16 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Parser
         {
             int intentIndex = tree.Intent.IntentIndex;
 
-            var flags = new List<FlagDescriptor>
-            {
-                new("recursive", new[] { "-r", "--recursive" }),
-                new("overwrite", new[] { "-o", "--overwrite" })
-            };
+            var flags = CopyCommandFlags.All;
 
             var foundFlags = new List<string>();
             var foundIndexes = new List<int>();
 
             foreach (var flag in flags) {
-                FlagExtractionResult flagExtractionResult = FlagExtractor.Extract(tokens, flag.Aliases);
-                if (flagExtractionResult != FlagExtractionResult.Empty) {
-                    foundFlags.AddRange(flagExtractionResult.Flags);
-                    foundIndexes.AddRange(flagExtractionResult.Indexes);
-                }
+                FlagExtractionResult flagExtractionResult = FlagExtractor.Extract(tokens, flag);
+
+                foundFlags.AddRange(flagExtractionResult.Flags);
+                foundIndexes.AddRange(flagExtractionResult.Indexes);
             }
 
             return new FlagExtractionResult(foundFlags, foundIndexes);

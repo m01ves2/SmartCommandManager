@@ -29,6 +29,14 @@ namespace SmartCommandManager.NLP.Intent.Parsers
             return new IntentParseResult( intent, index );
         }
 
+        // REVIEW: При поиске intent не учитывается Token.IsQuoted.
+        // Поэтому quoted-данные, совпадающие с aliases команд,
+        // распознаются как дополнительные намерения и вызывают конфликт.
+        // Для поддержки таких данных следует исключать quoted-токены
+        // из поиска intent.
+        // нижеуказанные примеры, конечно, вызовут ошибку (принимаем это как ограничение текущей реализации):
+        // list "copy"
+        // copy "exit" "backup"
         private Dictionary<IntentDescriptor, List<int>> GetCandidates(IReadOnlyList<Token> tokens, IEnumerable<IntentDescriptor> intents)
         {
             var intentsList = intents.ToList();

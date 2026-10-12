@@ -17,6 +17,8 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.Builder
         {
             FlagsCandidate flags = BuildFlags(tree);
 
+            FlagSemanticsValidator.Validate(flags);
+
             SourceCandidate sourceCandidate = BuildSource(tree);
             
             DestinationCandidate destinationCandidate = BuildDestination(tree, sourceCandidate, flags);
@@ -42,6 +44,11 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.Builder
         }
         private SourceCandidate BuildSourceCandidate(string path)
         {
+            // REVIEW: Относительный путь здесь проверяется относительно
+            // рабочего каталога процесса, а команда разрешает его относительно
+            // CommandContext.CurrentDirectory.
+            // Нужно разрешать путь относительно контекста до проверки,
+            // сохранять его в Candidate и Args и использовать при выполнении.
             ItemType sourceType = _fs.GetItemType(path);
             bool exists = sourceType != ItemType.NONE;
 
@@ -66,12 +73,20 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.Builder
 
         private DestinationCandidate BuildDestinationCandidate(string destinationPath, SourceCandidate source)
         {
-            ItemType destinationType = _fs.GetItemType(destinationPath); //FILE, DIRECTORY, NONE
-            bool exists = destinationType != ItemType.NONE; //не существует
+            // REVIEW: Относительный путь здесь проверяется относительно
+            // рабочего каталога процесса, а команда разрешает его относительно
+            // CommandContext.CurrentDirectory.
+            // Нужно разрешать путь относительно контекста до проверки,
+            // сохранять его в Candidate и Args и использовать при выполнении.
+            ItemType destinationType = _fs.GetItemType(destinationPath);
 
             if (destinationType == ItemType.DIRECTORY && source.ItemType == ItemType.FILE) {
-                destinationPath = Path.Combine(destinationPath, source.Path); //логика Path.Combine работает только если destination существует и является директорией.
+                destinationPath = Path.Combine( destinationPath, Path.GetFileName(source.Path));//логика Path.Combine работает только если destination существует и является директорией.
+
+                destinationType = _fs.GetItemType(destinationPath);
             }
+
+            bool exists = destinationType != ItemType.NONE;
 
             return new DestinationCandidate(destinationPath, destinationType, exists);
         }

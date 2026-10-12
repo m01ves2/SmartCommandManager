@@ -1,6 +1,4 @@
-﻿using SmartCommandManager.Modules.FileSystem.Commands.ListCommand;
-using SmartCommandManager.Modules.FileSystem.Commands.ListCommand.Builder;
-using SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Models;
+﻿using SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Models;
 using SmartCommandManager.Modules.FileSystem.Commands.ListCommand.NLP.Validators;
 using SmartCommandManager.Modules.FileSystem.Services;
 
@@ -37,6 +35,11 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.ListCommand.Builder
 
         private SourceCandidate BuildSourceCandidate(string path)
         {
+            // REVIEW: Относительный путь здесь проверяется относительно
+            // рабочего каталога процесса, а команда разрешает его относительно
+            // CommandContext.CurrentDirectory.
+            // Нужно разрешать путь относительно контекста до проверки,
+            // сохранять его в Candidate и Args и использовать при выполнении.
             ItemType sourceType = _fs.GetItemType(path);
             bool exists = sourceType != ItemType.NONE;
 

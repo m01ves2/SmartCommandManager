@@ -15,9 +15,11 @@ namespace SmartCommandManager.Modules.FileSystem.Commands.CopyCommand.NLP.Valida
 
             NotNullOrEmptyValidator.Validate(paths[0], "Source path");
 
+            string path = paths[0];
+
             // source не wildcard, если не поддерживается
-            if ( string.Equals(paths[0], "*")) {
-                throw new ValidationException($"Validation error: wildcard is not supported");
+            if (path.Contains('*') || path.Contains('?')) {
+                throw new ValidationException("Validation error: wildcard is not supported");
             }
         }
     }

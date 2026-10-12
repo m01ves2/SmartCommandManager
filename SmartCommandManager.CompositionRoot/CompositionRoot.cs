@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SmartCommandManager.Application.Services;
-using SmartCommandManager.Domain.Commands.Base;
 using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.Modules.Core.Commands.ExitCommand;
 using SmartCommandManager.Modules.Core.Commands.ExitCommand.NLP.Parsers;
@@ -59,18 +58,20 @@ namespace SmartCommandManager.CompositionRoot
             //Logging
             services.AddSingleton<ILogger>(NullLogger.Instance);
 
-            //Регистрируем команды
-            //-поведение
-            //-без состояния
-            //-не кэшируется
-            //=> AddTransient
+
+            // REVIEW: Команда зарегистрирована как Transient,
+            // но разрешается один раз при сборке pipeline.
+            // Pipeline сохраняет её и повторно использует при каждом Execute.
+            // Уточнить предполагаемое время жизни команды.
+            // конкретно здесь, команды можно было бы создавать и через
+            // services.AddSingleton<CopyCommand>(); И такой вариант ЗДЕСЬ был бы понятнее.
+            // Transient здесь работает, но создаёт ожидание новых экземпляров, которого путь выполнения не реализует.
             services.AddTransient<CopyCommand>();
             services.AddTransient<ListCommand>();
             services.AddTransient<ExitCommand>();
             services.AddTransient<PsCommand>();
             // HelpCommand — ЛЕНИВАЯ зависимость
-            services.AddTransient<HelpCommand>(sp => new HelpCommand(() => sp.GetRequiredService<CommandRegistry>().AllCommandsInfo()));
-
+            services.AddTransient<HelpCommand>(sp => new HelpCommand(() => sp.GetRequiredService<CommandRegistry>().AllCommandsHelpInfo()));
 
 
             //parsers

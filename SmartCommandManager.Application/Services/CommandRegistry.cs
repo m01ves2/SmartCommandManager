@@ -1,5 +1,4 @@
 ﻿using SmartCommandManager.Application.Exceptions;
-using SmartCommandManager.Domain.Commands.Base;
 using SmartCommandManager.Domain.Commands.Models;
 using SmartCommandManager.NLP.Intent.Models;
 
@@ -24,10 +23,15 @@ namespace SmartCommandManager.Application.Services
             return cmd;
         }
 
-        public IEnumerable<CommandInfo> AllCommandsInfo()
+        public IEnumerable<CommandHelpInfo> AllCommandsHelpInfo()
         {
-            foreach (var cmd in _intentCommandMap.Values)
-                yield return cmd.CommandInfo;
+            foreach (var entry in _intentCommandMap) {
+                var aliases = entry.Key.Aliases
+                    .Where(alias => alias != entry.Key.Primary)
+                    .ToArray();
+
+                yield return new CommandHelpInfo(entry.Value.CommandInfo, aliases);
+            }
         }
 
         public IReadOnlyCollection<IntentDescriptor> AllIntents => _intentCommandMap.Keys;

@@ -2,11 +2,12 @@
 {
     public interface IDirectoryService
     {
-        string[] ListDirectory(string path);
+        string[] ListDirectory(string path, bool directoryOnly);
         void CreateDirectory(string path);
         void DeleteDirectory(string path, bool recursive);
         void CopyDirectory(string source, string destination, bool recursive);
         void MoveDirectory(string source, string destination);
         bool IsDirectory(string source);
+        DirectoryInfo GetDirectoryInfo(string path);
     }
 }

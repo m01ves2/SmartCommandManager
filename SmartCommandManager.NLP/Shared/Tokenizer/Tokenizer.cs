@@ -1,4 +1,5 @@
 ﻿using SmartCommandManager.NLP.Shared.Models;
+using System.ComponentModel;
 
 namespace SmartCommandManager.NLP.Shared.Tokenizer
 {
@@ -15,8 +16,8 @@ namespace SmartCommandManager.NLP.Shared.Tokenizer
 
             for (int i = 0; i < input.Length; i++) {
                 char c = input[i];
-                
-                if(state != State.Escape)
+
+                if (state != State.Escape)
                     previousState = state;
 
                 switch (state) {
@@ -47,8 +48,24 @@ namespace SmartCommandManager.NLP.Shared.Tokenizer
 
             }
 
-            if (builder.HasData())
-                tokens.Add(builder.Build());
+            // REVIEW: Проверка конечного состояния:
+            // Inside — добавить накопленный токен;
+            // Outside — ничего не делать;
+            // InsideQuoted — ошибка: незакрытая кавычка;
+            // Escape — ошибка: незавершённое экранирование.
+            switch (state) {
+                case State.Inside:
+                    if (builder.HasData())
+                        tokens.Add(builder.Build());
+                    break;
+
+                case State.Outside:
+                    break;
+
+                case State.InsideQuoted:
+                case State.Escape:
+                    throw new InvalidOperationException("Incorrect input: unclosed quoted argument");
+            }
 
             return tokens;
         }

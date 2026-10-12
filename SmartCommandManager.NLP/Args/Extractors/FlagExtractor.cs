@@ -1,18 +1,19 @@
-﻿using SmartCommandManager.NLP.Args.Models;
+﻿using SmartCommandManager.Domain.Commands.Models;
+using SmartCommandManager.NLP.Args.Models;
 using SmartCommandManager.NLP.Shared.Models;
 
 namespace SmartCommandManager.NLP.Command.Extractors
 {
     public static class FlagExtractor //: IFlagExtractor
     {
-        public static FlagExtractionResult Extract(IReadOnlyList<Token> tokens, IReadOnlyCollection<string> Aliases)
+        public static FlagExtractionResult Extract(IReadOnlyList<Token> tokens, FlagDescriptor flag)
         {
             var flagsFound = new List<string>();
             var indexesFound = new List<int>();
 
             for (int i = 0; i < tokens.Count; i++) {
-                if (Aliases.Contains(tokens[i].Value)) {
-                    flagsFound.Add(tokens[i].Value);
+                if (flag.Aliases.Contains(tokens[i].Value)) {
+                    flagsFound.Add(flag.Canonical);
                     indexesFound.Add(i);
                 }
             }
